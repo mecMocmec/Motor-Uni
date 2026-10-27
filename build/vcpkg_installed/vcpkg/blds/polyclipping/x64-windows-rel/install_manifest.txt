@@ -1,6 +1,0 @@
-C:/Users/marcpp12/Documents/GitHub/Motor-Uni/build/vcpkg_installed/vcpkg/pkgs/polyclipping_x64-windows/include/polyclipping/clipper.hpp
-C:/Users/marcpp12/Documents/GitHub/Motor-Uni/build/vcpkg_installed/vcpkg/pkgs/polyclipping_x64-windows/lib/polyclipping.lib
-C:/Users/marcpp12/Documents/GitHub/Motor-Uni/build/vcpkg_installed/vcpkg/pkgs/polyclipping_x64-windows/share/pkgconfig/polyclipping.pc
-C:/Users/marcpp12/Documents/GitHub/Motor-Uni/build/vcpkg_installed/vcpkg/pkgs/polyclipping_x64-windows/lib/polyclipping.lib
-C:/Users/marcpp12/Documents/GitHub/Motor-Uni/build/vcpkg_installed/vcpkg/pkgs/polyclipping_x64-windows/share/polyclipping/polyclippingConfig.cmake
-C:/Users/marcpp12/Documents/GitHub/Motor-Uni/build/vcpkg_installed/vcpkg/pkgs/polyclipping_x64-windows/share/polyclipping/polyclippingConfig-release.cmake

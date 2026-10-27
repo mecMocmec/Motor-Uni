@@ -1,9 +1,0 @@
-{
-	"InstallScripts" : 
-	[
-		"C:/Users/marcpp12/Documents/GitHub/Motor-Uni/build/cmake_install.cmake",
-		"C:/Users/marcpp12/Documents/GitHub/Motor-Uni/build/Engine/cmake_install.cmake",
-		"C:/Users/marcpp12/Documents/GitHub/Motor-Uni/build/Editor/cmake_install.cmake"
-	],
-	"Parallel" : false
-}

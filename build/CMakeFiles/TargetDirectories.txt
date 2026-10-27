@@ -1,5 +1,0 @@
-C:/Users/marcpp12/Documents/GitHub/Motor-Uni/build/CMakeFiles/ALL_BUILD.dir
-C:/Users/marcpp12/Documents/GitHub/Motor-Uni/build/CMakeFiles/ZERO_CHECK.dir
-C:/Users/marcpp12/Documents/GitHub/Motor-Uni/build/Engine/CMakeFiles/Engine.dir
-C:/Users/marcpp12/Documents/GitHub/Motor-Uni/build/Editor/CMakeFiles/Editor.dir
-C:/Users/marcpp12/Documents/GitHub/Motor-Uni/build/Editor/CMakeFiles/CopyAssets.dir

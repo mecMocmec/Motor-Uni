@@ -1,8 +1,0 @@
-Package: lcms
-Version: 2.19.1
-Port-Version: 1
-Depends: vcpkg-tool-meson
-Architecture: x64-windows
-Multi-Arch: same
-Abi: 7cd671b39a2875bdf0f2981bc20d9b7a651b261702512ad5b5689c4ce672dd21
-Description: Little CMS.

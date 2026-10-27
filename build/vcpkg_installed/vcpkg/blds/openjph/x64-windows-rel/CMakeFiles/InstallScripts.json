@@ -1,8 +1,0 @@
-{
-	"InstallScripts" : 
-	[
-		"C:/Users/marcpp12/Documents/GitHub/Motor-Uni/build/vcpkg_installed/vcpkg/blds/openjph/x64-windows-rel/cmake_install.cmake",
-		"C:/Users/marcpp12/Documents/GitHub/Motor-Uni/build/vcpkg_installed/vcpkg/blds/openjph/x64-windows-rel/src/core/cmake_install.cmake"
-	],
-	"Parallel" : false
-}

@@ -1,8 +1,0 @@
-# ninja log v7
-4	971	8147896653683187	include/glad/glad.h	3a526efa9c14411a
-4	971	8147896653683187	src/glad.c	3a526efa9c14411a
-4	971	8147896653683187	C:/Users/marcpp12/Documents/GitHub/Motor-Uni/build/vcpkg_installed/vcpkg/blds/glad/x64-windows-dbg/include/glad/glad.h	3a526efa9c14411a
-4	971	8147896653683187	C:/Users/marcpp12/Documents/GitHub/Motor-Uni/build/vcpkg_installed/vcpkg/blds/glad/x64-windows-dbg/src/glad.c	3a526efa9c14411a
-972	1215	8147896654264271	CMakeFiles/glad.dir/src/glad.c.obj	35f36caa39d727d0
-1215	1258	8147896656693882	glad.lib	ac1437ed22b0d544
-1258	1344	8147896657128147	CMakeFiles/install.util	e7c86b4f69795412
