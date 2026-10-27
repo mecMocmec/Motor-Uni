@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="18.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <CustomBuild Include="C:\Users\marcpp12\Documents\GitHub\Motor-Uni\build\CMakeFiles\5806267946817b1c957764a0ff25478d\CopyAssets.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="C:\Users\marcpp12\Documents\GitHub\Motor-Uni\Editor\CMakeLists.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="C:\Users\marcpp12\Documents\GitHub\Motor-Uni\build\Editor\CMakeFiles\CopyAssets" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="CMake Rules">
+      <UniqueIdentifier>{C7232263-74F2-3163-A32C-9040ED7F4050}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

@@ -22,13 +22,16 @@
 	"dependencies" : 
 	[
 		{
+			"id" : "CopyAssets::@b58ce4ae47b5f4fc4f99"
+		},
+		{
+			"id" : "Engine::@8f69bdd092c897d92c1e"
+		},
+		{
 			"id" : "Editor::@b58ce4ae47b5f4fc4f99"
 		},
 		{
 			"id" : "ZERO_CHECK::@6890427a1f51a3e7e1df"
-		},
-		{
-			"id" : "Engine::@8f69bdd092c897d92c1e"
 		}
 	],
 	"id" : "ALL_BUILD::@6890427a1f51a3e7e1df",
@@ -37,10 +40,13 @@
 	"orderDependencies" : 
 	[
 		{
-			"id" : "Editor::@b58ce4ae47b5f4fc4f99"
+			"id" : "CopyAssets::@b58ce4ae47b5f4fc4f99"
 		},
 		{
 			"id" : "Engine::@8f69bdd092c897d92c1e"
+		},
+		{
+			"id" : "Editor::@b58ce4ae47b5f4fc4f99"
 		}
 	],
 	"paths" : 

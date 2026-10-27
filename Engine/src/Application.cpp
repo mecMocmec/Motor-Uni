@@ -2,11 +2,40 @@
 
 #include "Engine/ComponentMesh.h"
 #include "Engine/Log.h"
+#include "Engine/ModelImporter.h"
 #include "Engine/Primitives.h"
 #include "GLInclude.h"
+#include "PathUtil.h"
+
+#include <algorithm>
+#include <cctype>
+#include <cmath>
+#include <filesystem>
+#include <system_error>
 
 namespace Engine
 {
+namespace
+{
+std::string ToLower(std::string text)
+{
+    std::transform(text.begin(), text.end(), text.begin(), [](unsigned char c) { return static_cast<char>(std::tolower(c)); });
+    return text;
+}
+
+// Extensió en minúscules, amb el punt (".fbx"); buida si no en té.
+std::string LowerExtension(const std::string& path)
+{
+    const std::size_t dot = path.find_last_of('.');
+    const std::size_t separator = path.find_last_of("/\\");
+    if (dot == std::string::npos || (separator != std::string::npos && dot < separator))
+    {
+        return {};
+    }
+    return ToLower(path.substr(dot));
+}
+} // namespace
+
 bool Application::Init(const char* title, int width, int height)
 {
     if (!SDL_Init(SDL_INIT_VIDEO))
@@ -60,9 +89,8 @@ bool Application::Init(const char* title, int width, int height)
         return false;
     }
 
-    // Escena inicial: un cub perquè hi hagi alguna cosa a la pantalla.
-    GameObject& cube = m_scene.CreateGameObject("Cube");
-    cube.AddComponent<ComponentMesh>(Primitives::CreateCube());
+    ModelImporter::Init();
+    LoadDefaultModel();
 
     m_running = true;
     return true;
@@ -78,6 +106,7 @@ void Application::Shutdown()
         SDL_GL_DestroyContext(m_glContext);
         m_glContext = nullptr;
     }
+    ModelImporter::Shutdown();
     if (m_window != nullptr)
     {
         SDL_DestroyWindow(m_window);
@@ -100,12 +129,87 @@ void Application::PumpEvents(const std::function<void(const SDL_Event&)>& onEven
         {
             m_running = false;
         }
+        else if (event.type == SDL_EVENT_DROP_FILE && event.drop.data != nullptr)
+        {
+            HandleDroppedFile(event.drop.data);
+        }
     }
 }
 
 void Application::Update()
 {
     m_scene.Update();
+}
+
+bool Application::LoadModel(const std::string& utf8Path)
+{
+    GameObject* root = ModelImporter::Load(m_scene, utf8Path);
+    if (root == nullptr)
+    {
+        return false;
+    }
+
+    m_scene.Update();
+    m_scene.Select(root);
+
+    glm::vec3 boundsMin;
+    glm::vec3 boundsMax;
+    if (root->ComputeWorldAabb(boundsMin, boundsMax))
+    {
+        const glm::vec3 center = (boundsMin + boundsMax) * 0.5f;
+        const float radius = glm::length(boundsMax - boundsMin) * 0.5f;
+        m_renderer.FocusOn(center, radius);
+    }
+    return true;
+}
+
+void Application::LoadDefaultModel()
+{
+    // Busca (també dins de subcarpetes) a Assets/Resources, al costat de l'executable,
+    // un .fbx amb "baker" al nom.
+    const char* basePath = SDL_GetBasePath();
+    const std::filesystem::path resources = std::filesystem::path(basePath != nullptr ? basePath : "") / "Assets" / "Resources";
+    ENGINE_LOGF("Looking for the default model in '{}'", ToUtf8(resources));
+
+    std::error_code error;
+    if (std::filesystem::is_directory(resources, error))
+    {
+        for (const auto& entry : std::filesystem::recursive_directory_iterator(resources, error))
+        {
+            if (!entry.is_regular_file())
+            {
+                continue;
+            }
+            const std::string fileName = ToLower(ToUtf8(entry.path().filename()));
+            if (fileName.find("baker") != std::string::npos && LowerExtension(fileName) == ".fbx" && LoadModel(ToUtf8(entry.path())))
+            {
+                return;
+            }
+        }
+    }
+
+    ENGINE_LOG("Default model (baker_house .fbx) not found: creating a cube instead");
+    GameObject& cube = m_scene.CreateGameObject("Cube");
+    cube.AddComponent<ComponentMesh>(Primitives::CreateCube());
+}
+
+void Application::HandleDroppedFile(const std::string& utf8Path)
+{
+    ENGINE_LOGF("File dropped: {}", utf8Path);
+
+    const std::string extension = LowerExtension(utf8Path);
+    if (extension == ".fbx")
+    {
+        LoadModel(utf8Path);
+    }
+    else if (extension == ".png" || extension == ".dds")
+    {
+        ENGINE_LOG("Texture drag & drop will be available in the next step (DevIL)");
+    }
+    else
+    {
+        ENGINE_LOGF("Unsupported file type '{}'", extension);
+    }
 }
 
 void Application::ClearBackbuffer()

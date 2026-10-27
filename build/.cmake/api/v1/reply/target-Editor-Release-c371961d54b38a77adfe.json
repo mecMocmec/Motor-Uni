@@ -2,10 +2,10 @@
 	"artifacts" : 
 	[
 		{
-			"path" : "Editor/Debug/Editor.exe"
+			"path" : "Editor/Release/Editor.exe"
 		},
 		{
-			"path" : "Editor/Debug/Editor.pdb"
+			"path" : "Editor/Release/Editor.pdb"
 		}
 	],
 	"backtrace" : 2,
@@ -20,6 +20,7 @@
 			"include",
 			"_find_package",
 			"find_package",
+			"add_dependencies",
 			"add_custom_command"
 		],
 		"files" : 
@@ -59,7 +60,7 @@
 			{
 				"command" : 2,
 				"file" : 2,
-				"line" : 18,
+				"line" : 19,
 				"parent" : 4
 			},
 			{
@@ -96,6 +97,12 @@
 			},
 			{
 				"command" : 7,
+				"file" : 1,
+				"line" : 14,
+				"parent" : 0
+			},
+			{
+				"command" : 8,
 				"file" : 0,
 				"line" : 626,
 				"parent" : 1
@@ -124,7 +131,7 @@
 			"compileCommandFragments" : 
 			[
 				{
-					"fragment" : "/DWIN32 /D_WINDOWS /W3 /GR /EHsc /MDd /Zi /Ob0 /Od /RTC1 -std:c++20 -MDd -Zi"
+					"fragment" : "/DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /O2 /Ob2 /DNDEBUG -std:c++20 -MD"
 				}
 			],
 			"includes" : 
@@ -158,11 +165,15 @@
 	"dependencies" : 
 	[
 		{
-			"id" : "ZERO_CHECK::@6890427a1f51a3e7e1df"
+			"backtrace" : 12,
+			"id" : "CopyAssets::@b58ce4ae47b5f4fc4f99"
 		},
 		{
 			"backtrace" : 3,
 			"id" : "Engine::@8f69bdd092c897d92c1e"
+		},
+		{
+			"id" : "ZERO_CHECK::@6890427a1f51a3e7e1df"
 		}
 	],
 	"id" : "Editor::@b58ce4ae47b5f4fc4f99",
@@ -171,11 +182,11 @@
 		"commandFragments" : 
 		[
 			{
-				"fragment" : "/DWIN32 /D_WINDOWS /W3 /GR /EHsc /MDd /Zi /Ob0 /Od /RTC1 -MDd -Zi",
+				"fragment" : "/DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /O2 /Ob2 /DNDEBUG -MD",
 				"role" : "flags"
 			},
 			{
-				"fragment" : "/machine:x64 /debug /INCREMENTAL",
+				"fragment" : "/machine:x64 /INCREMENTAL:NO",
 				"role" : "flags"
 			},
 			{
@@ -184,32 +195,32 @@
 			},
 			{
 				"backtrace" : 3,
-				"fragment" : "..\\Engine\\Debug\\Engine.lib",
+				"fragment" : "..\\Engine\\Release\\Engine.lib",
 				"role" : "libraries"
 			},
 			{
 				"backtrace" : 3,
-				"fragment" : "..\\vcpkg_installed\\x64-windows\\debug\\lib\\imguid.lib",
+				"fragment" : "..\\vcpkg_installed\\x64-windows\\lib\\imgui.lib",
 				"role" : "libraries"
 			},
 			{
 				"backtrace" : 5,
-				"fragment" : "..\\vcpkg_installed\\x64-windows\\debug\\lib\\SDL3.lib",
+				"fragment" : "..\\vcpkg_installed\\x64-windows\\lib\\SDL3.lib",
 				"role" : "libraries"
 			},
 			{
 				"backtrace" : 5,
-				"fragment" : "..\\vcpkg_installed\\x64-windows\\debug\\lib\\glad.lib",
+				"fragment" : "..\\vcpkg_installed\\x64-windows\\lib\\glad.lib",
 				"role" : "libraries"
 			},
 			{
 				"backtrace" : 5,
-				"fragment" : "..\\vcpkg_installed\\x64-windows\\debug\\lib\\glm.lib",
+				"fragment" : "..\\vcpkg_installed\\x64-windows\\lib\\glm.lib",
 				"role" : "libraries"
 			},
 			{
 				"backtrace" : 5,
-				"fragment" : "..\\vcpkg_installed\\x64-windows\\debug\\lib\\assimp-vc145-mtd.lib",
+				"fragment" : "..\\vcpkg_installed\\x64-windows\\lib\\assimp-vc145-mt.lib",
 				"role" : "libraries"
 			},
 			{
@@ -229,7 +240,7 @@
 			},
 			{
 				"backtrace" : 11,
-				"fragment" : "..\\vcpkg_installed\\x64-windows\\debug\\lib\\SDL3.lib",
+				"fragment" : "..\\vcpkg_installed\\x64-windows\\lib\\SDL3.lib",
 				"role" : "libraries"
 			},
 			{
@@ -256,6 +267,10 @@
 	[
 		{
 			"backtrace" : 12,
+			"id" : "CopyAssets::@b58ce4ae47b5f4fc4f99"
+		},
+		{
+			"backtrace" : 13,
 			"id" : "Editor::@b58ce4ae47b5f4fc4f99"
 		}
 	],

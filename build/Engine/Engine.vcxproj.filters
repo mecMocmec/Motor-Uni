@@ -16,6 +16,9 @@
     <ClCompile Include="C:\Users\marcpp12\Documents\GitHub\Motor-Uni\Engine\src\Mesh.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="C:\Users\marcpp12\Documents\GitHub\Motor-Uni\Engine\src\ModelImporter.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="C:\Users\marcpp12\Documents\GitHub\Motor-Uni\Engine\src\Primitives.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>

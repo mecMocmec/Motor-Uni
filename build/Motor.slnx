@@ -8,6 +8,7 @@
 		<Platform Name="x64"/>
 	</Configurations>
 	<Project Path="ALL_BUILD.vcxproj" Type="8bc9ceb8-8b4a-11d0-8d11-00a0c91bc942" Id="42482c66-a867-3a23-b0eb-d25d73b1b48b" DefaultStartup="true">
+		<BuildDependency Project="Editor/CopyAssets.vcxproj"/>
 		<BuildDependency Project="Editor/Editor.vcxproj"/>
 		<BuildDependency Project="Engine/Engine.vcxproj"/>
 		<BuildDependency Project="ZERO_CHECK.vcxproj"/>
@@ -16,7 +17,11 @@
 		<Build Solution="MinSizeRel|*" Project="false"/>
 		<Build Solution="RelWithDebInfo|*" Project="false"/>
 	</Project>
+	<Project Path="Editor/CopyAssets.vcxproj" Type="8bc9ceb8-8b4a-11d0-8d11-00a0c91bc942" Id="d1ea509a-4c9a-3e14-8853-2771df284e06">
+		<BuildDependency Project="ZERO_CHECK.vcxproj"/>
+	</Project>
 	<Project Path="Editor/Editor.vcxproj" Type="8bc9ceb8-8b4a-11d0-8d11-00a0c91bc942" Id="ccb527bc-9895-3bd5-9a62-34b8e6af672f">
+		<BuildDependency Project="Editor/CopyAssets.vcxproj"/>
 		<BuildDependency Project="Engine/Engine.vcxproj"/>
 		<BuildDependency Project="ZERO_CHECK.vcxproj"/>
 	</Project>

@@ -6,6 +6,7 @@
 #include <SDL3/SDL.h>
 
 #include <functional>
+#include <string>
 
 namespace Engine
 {
@@ -17,6 +18,9 @@ public:
 
     // Processa els events de SDL. 'onEvent' deixa que l'editor també els rebi (ImGui).
     void PumpEvents(const std::function<void(const SDL_Event&)>& onEvent);
+
+    // Importa un model (FBX) i l'afegeix a l'escena. La ruta és UTF-8.
+    bool LoadModel(const std::string& utf8Path);
 
     void Update();
     void ClearBackbuffer();
@@ -33,6 +37,9 @@ public:
     Scene& GetScene() { return m_scene; }
 
 private:
+    void LoadDefaultModel();
+    void HandleDroppedFile(const std::string& utf8Path);
+
     SDL_Window* m_window = nullptr;
     SDL_GLContext m_glContext = nullptr;
     Renderer m_renderer;

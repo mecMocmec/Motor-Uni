@@ -10,6 +10,7 @@ add_library(Engine STATIC
     src/GameObject.cpp
     src/Log.cpp
     src/Mesh.cpp
+    src/ModelImporter.cpp
     src/Primitives.cpp
     src/Renderer.cpp
     src/Scene.cpp

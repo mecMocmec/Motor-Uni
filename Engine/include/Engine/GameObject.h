@@ -60,6 +60,9 @@ public:
         return nullptr;
     }
 
+    // AABB en espai món de tot el subarbre (cal haver actualitzat les matrius). Retorna false si no hi ha malles.
+    bool ComputeWorldAabb(glm::vec3& outMin, glm::vec3& outMax) const;
+
     // Recalcula les matrius globals de tot el subarbre.
     void UpdateTransforms(const glm::mat4& parentGlobal);
 

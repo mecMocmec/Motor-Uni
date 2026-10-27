@@ -20,6 +20,7 @@
 			"include",
 			"_find_package",
 			"find_package",
+			"add_dependencies",
 			"add_custom_command"
 		],
 		"files" : 
@@ -59,7 +60,7 @@
 			{
 				"command" : 2,
 				"file" : 2,
-				"line" : 18,
+				"line" : 19,
 				"parent" : 4
 			},
 			{
@@ -96,6 +97,12 @@
 			},
 			{
 				"command" : 7,
+				"file" : 1,
+				"line" : 14,
+				"parent" : 0
+			},
+			{
+				"command" : 8,
 				"file" : 0,
 				"line" : 626,
 				"parent" : 1
@@ -158,11 +165,15 @@
 	"dependencies" : 
 	[
 		{
-			"id" : "ZERO_CHECK::@6890427a1f51a3e7e1df"
+			"backtrace" : 12,
+			"id" : "CopyAssets::@b58ce4ae47b5f4fc4f99"
 		},
 		{
 			"backtrace" : 3,
 			"id" : "Engine::@8f69bdd092c897d92c1e"
+		},
+		{
+			"id" : "ZERO_CHECK::@6890427a1f51a3e7e1df"
 		}
 	],
 	"id" : "Editor::@b58ce4ae47b5f4fc4f99",
@@ -256,6 +267,10 @@
 	[
 		{
 			"backtrace" : 12,
+			"id" : "CopyAssets::@b58ce4ae47b5f4fc4f99"
+		},
+		{
+			"backtrace" : 13,
 			"id" : "Editor::@b58ce4ae47b5f4fc4f99"
 		}
 	],

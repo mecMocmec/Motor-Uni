@@ -108,7 +108,7 @@
 					"targetIndexes" : 
 					[
 						0,
-						3
+						4
 					]
 				},
 				{
@@ -135,7 +135,7 @@
 					"source" : "Engine",
 					"targetIndexes" : 
 					[
-						2
+						3
 					]
 				},
 				{
@@ -156,7 +156,8 @@
 					"source" : "Editor",
 					"targetIndexes" : 
 					[
-						1
+						1,
+						2
 					]
 				}
 			],
@@ -191,7 +192,8 @@
 						0,
 						1,
 						2,
-						3
+						3,
+						4
 					]
 				}
 			],
@@ -200,21 +202,28 @@
 				{
 					"directoryIndex" : 0,
 					"id" : "ALL_BUILD::@6890427a1f51a3e7e1df",
-					"jsonFile" : "target-ALL_BUILD-Debug-9329b8452591f230a03a.json",
+					"jsonFile" : "target-ALL_BUILD-Debug-bca582a57f1bc883ba84.json",
 					"name" : "ALL_BUILD",
 					"projectIndex" : 0
 				},
 				{
 					"directoryIndex" : 2,
+					"id" : "CopyAssets::@b58ce4ae47b5f4fc4f99",
+					"jsonFile" : "target-CopyAssets-Debug-2d5a04c62f68ff78cd76.json",
+					"name" : "CopyAssets",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 2,
 					"id" : "Editor::@b58ce4ae47b5f4fc4f99",
-					"jsonFile" : "target-Editor-Debug-81e43a0b898819a51791.json",
+					"jsonFile" : "target-Editor-Debug-ac1486382c7863d99448.json",
 					"name" : "Editor",
 					"projectIndex" : 0
 				},
 				{
 					"directoryIndex" : 1,
 					"id" : "Engine::@8f69bdd092c897d92c1e",
-					"jsonFile" : "target-Engine-Debug-f3fc175ce7df16d47216.json",
+					"jsonFile" : "target-Engine-Debug-e76c7cf0cd494bb44cd5.json",
 					"name" : "Engine",
 					"projectIndex" : 0
 				},
@@ -334,7 +343,7 @@
 					"targetIndexes" : 
 					[
 						0,
-						3
+						4
 					]
 				},
 				{
@@ -361,7 +370,7 @@
 					"source" : "Engine",
 					"targetIndexes" : 
 					[
-						2
+						3
 					]
 				},
 				{
@@ -382,7 +391,8 @@
 					"source" : "Editor",
 					"targetIndexes" : 
 					[
-						1
+						1,
+						2
 					]
 				}
 			],
@@ -417,7 +427,8 @@
 						0,
 						1,
 						2,
-						3
+						3,
+						4
 					]
 				}
 			],
@@ -426,21 +437,28 @@
 				{
 					"directoryIndex" : 0,
 					"id" : "ALL_BUILD::@6890427a1f51a3e7e1df",
-					"jsonFile" : "target-ALL_BUILD-Release-9329b8452591f230a03a.json",
+					"jsonFile" : "target-ALL_BUILD-Release-bca582a57f1bc883ba84.json",
 					"name" : "ALL_BUILD",
 					"projectIndex" : 0
 				},
 				{
 					"directoryIndex" : 2,
+					"id" : "CopyAssets::@b58ce4ae47b5f4fc4f99",
+					"jsonFile" : "target-CopyAssets-Release-2d5a04c62f68ff78cd76.json",
+					"name" : "CopyAssets",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 2,
 					"id" : "Editor::@b58ce4ae47b5f4fc4f99",
-					"jsonFile" : "target-Editor-Release-e0db6614cd656da67870.json",
+					"jsonFile" : "target-Editor-Release-c371961d54b38a77adfe.json",
 					"name" : "Editor",
 					"projectIndex" : 0
 				},
 				{
 					"directoryIndex" : 1,
 					"id" : "Engine::@8f69bdd092c897d92c1e",
-					"jsonFile" : "target-Engine-Release-52f77d79c8d1b28f8c07.json",
+					"jsonFile" : "target-Engine-Release-0251b229db05e54d5a69.json",
 					"name" : "Engine",
 					"projectIndex" : 0
 				},
@@ -560,7 +578,7 @@
 					"targetIndexes" : 
 					[
 						0,
-						3
+						4
 					]
 				},
 				{
@@ -587,7 +605,7 @@
 					"source" : "Engine",
 					"targetIndexes" : 
 					[
-						2
+						3
 					]
 				},
 				{
@@ -608,7 +626,8 @@
 					"source" : "Editor",
 					"targetIndexes" : 
 					[
-						1
+						1,
+						2
 					]
 				}
 			],
@@ -643,7 +662,8 @@
 						0,
 						1,
 						2,
-						3
+						3,
+						4
 					]
 				}
 			],
@@ -652,21 +672,28 @@
 				{
 					"directoryIndex" : 0,
 					"id" : "ALL_BUILD::@6890427a1f51a3e7e1df",
-					"jsonFile" : "target-ALL_BUILD-MinSizeRel-9329b8452591f230a03a.json",
+					"jsonFile" : "target-ALL_BUILD-MinSizeRel-bca582a57f1bc883ba84.json",
 					"name" : "ALL_BUILD",
 					"projectIndex" : 0
 				},
 				{
 					"directoryIndex" : 2,
+					"id" : "CopyAssets::@b58ce4ae47b5f4fc4f99",
+					"jsonFile" : "target-CopyAssets-MinSizeRel-2d5a04c62f68ff78cd76.json",
+					"name" : "CopyAssets",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 2,
 					"id" : "Editor::@b58ce4ae47b5f4fc4f99",
-					"jsonFile" : "target-Editor-MinSizeRel-8fd91d4e1da084e5150b.json",
+					"jsonFile" : "target-Editor-MinSizeRel-e6b1470ab5b066f730ae.json",
 					"name" : "Editor",
 					"projectIndex" : 0
 				},
 				{
 					"directoryIndex" : 1,
 					"id" : "Engine::@8f69bdd092c897d92c1e",
-					"jsonFile" : "target-Engine-MinSizeRel-b8f9ab80c2b77e822460.json",
+					"jsonFile" : "target-Engine-MinSizeRel-6dbde2b4945246cac331.json",
 					"name" : "Engine",
 					"projectIndex" : 0
 				},
@@ -786,7 +813,7 @@
 					"targetIndexes" : 
 					[
 						0,
-						3
+						4
 					]
 				},
 				{
@@ -813,7 +840,7 @@
 					"source" : "Engine",
 					"targetIndexes" : 
 					[
-						2
+						3
 					]
 				},
 				{
@@ -834,7 +861,8 @@
 					"source" : "Editor",
 					"targetIndexes" : 
 					[
-						1
+						1,
+						2
 					]
 				}
 			],
@@ -869,7 +897,8 @@
 						0,
 						1,
 						2,
-						3
+						3,
+						4
 					]
 				}
 			],
@@ -878,21 +907,28 @@
 				{
 					"directoryIndex" : 0,
 					"id" : "ALL_BUILD::@6890427a1f51a3e7e1df",
-					"jsonFile" : "target-ALL_BUILD-RelWithDebInfo-9329b8452591f230a03a.json",
+					"jsonFile" : "target-ALL_BUILD-RelWithDebInfo-bca582a57f1bc883ba84.json",
 					"name" : "ALL_BUILD",
 					"projectIndex" : 0
 				},
 				{
 					"directoryIndex" : 2,
+					"id" : "CopyAssets::@b58ce4ae47b5f4fc4f99",
+					"jsonFile" : "target-CopyAssets-RelWithDebInfo-2d5a04c62f68ff78cd76.json",
+					"name" : "CopyAssets",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 2,
 					"id" : "Editor::@b58ce4ae47b5f4fc4f99",
-					"jsonFile" : "target-Editor-RelWithDebInfo-040cf19e0777a3a59392.json",
+					"jsonFile" : "target-Editor-RelWithDebInfo-3d6720356121294098f5.json",
 					"name" : "Editor",
 					"projectIndex" : 0
 				},
 				{
 					"directoryIndex" : 1,
 					"id" : "Engine::@8f69bdd092c897d92c1e",
-					"jsonFile" : "target-Engine-RelWithDebInfo-3888ef128f448867fe06.json",
+					"jsonFile" : "target-Engine-RelWithDebInfo-829bc67b7f4aa6bb7ea7.json",
 					"name" : "Engine",
 					"projectIndex" : 0
 				},
