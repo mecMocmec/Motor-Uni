@@ -1,0 +1,7 @@
+C:/Users/marcpp12/Documents/GitHub/Motor-Uni/build/vcpkg_installed/vcpkg/pkgs/glad_x64-windows/debug/lib/glad.lib
+C:/Users/marcpp12/Documents/GitHub/Motor-Uni/build/vcpkg_installed/vcpkg/pkgs/glad_x64-windows/debug/include/glad/glad.h
+C:/Users/marcpp12/Documents/GitHub/Motor-Uni/build/vcpkg_installed/vcpkg/pkgs/glad_x64-windows/debug/include/KHR/khrplatform.h
+C:/Users/marcpp12/Documents/GitHub/Motor-Uni/build/vcpkg_installed/vcpkg/pkgs/glad_x64-windows/debug/lib/cmake/glad/gladConfig.cmake
+C:/Users/marcpp12/Documents/GitHub/Motor-Uni/build/vcpkg_installed/vcpkg/pkgs/glad_x64-windows/debug/lib/cmake/glad/gladConfigVersion.cmake
+C:/Users/marcpp12/Documents/GitHub/Motor-Uni/build/vcpkg_installed/vcpkg/pkgs/glad_x64-windows/debug/lib/cmake/glad/gladTargets.cmake
+C:/Users/marcpp12/Documents/GitHub/Motor-Uni/build/vcpkg_installed/vcpkg/pkgs/glad_x64-windows/debug/lib/cmake/glad/gladTargets-debug.cmake

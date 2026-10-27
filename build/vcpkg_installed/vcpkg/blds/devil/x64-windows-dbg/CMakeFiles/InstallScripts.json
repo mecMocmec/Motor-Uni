@@ -1,0 +1,10 @@
+{
+	"InstallScripts" : 
+	[
+		"C:/Users/marcpp12/Documents/GitHub/Motor-Uni/build/vcpkg_installed/vcpkg/blds/devil/x64-windows-dbg/cmake_install.cmake",
+		"C:/Users/marcpp12/Documents/GitHub/Motor-Uni/build/vcpkg_installed/vcpkg/blds/devil/x64-windows-dbg/src-IL/cmake_install.cmake",
+		"C:/Users/marcpp12/Documents/GitHub/Motor-Uni/build/vcpkg_installed/vcpkg/blds/devil/x64-windows-dbg/src-ILU/cmake_install.cmake",
+		"C:/Users/marcpp12/Documents/GitHub/Motor-Uni/build/vcpkg_installed/vcpkg/blds/devil/x64-windows-dbg/src-ILUT/cmake_install.cmake"
+	],
+	"Parallel" : false
+}

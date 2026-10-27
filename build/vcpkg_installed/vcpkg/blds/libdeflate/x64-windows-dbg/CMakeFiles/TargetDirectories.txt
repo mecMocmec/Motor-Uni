@@ -1,0 +1,6 @@
+C:/Users/marcpp12/Documents/GitHub/Motor-Uni/build/vcpkg_installed/vcpkg/blds/libdeflate/x64-windows-dbg/CMakeFiles/libdeflate_shared.dir
+C:/Users/marcpp12/Documents/GitHub/Motor-Uni/build/vcpkg_installed/vcpkg/blds/libdeflate/x64-windows-dbg/CMakeFiles/edit_cache.dir
+C:/Users/marcpp12/Documents/GitHub/Motor-Uni/build/vcpkg_installed/vcpkg/blds/libdeflate/x64-windows-dbg/CMakeFiles/rebuild_cache.dir
+C:/Users/marcpp12/Documents/GitHub/Motor-Uni/build/vcpkg_installed/vcpkg/blds/libdeflate/x64-windows-dbg/CMakeFiles/list_install_components.dir
+C:/Users/marcpp12/Documents/GitHub/Motor-Uni/build/vcpkg_installed/vcpkg/blds/libdeflate/x64-windows-dbg/CMakeFiles/install.dir
+C:/Users/marcpp12/Documents/GitHub/Motor-Uni/build/vcpkg_installed/vcpkg/blds/libdeflate/x64-windows-dbg/CMakeFiles/install/local.dir

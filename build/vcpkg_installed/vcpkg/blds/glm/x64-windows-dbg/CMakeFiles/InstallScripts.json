@@ -1,0 +1,8 @@
+{
+	"InstallScripts" : 
+	[
+		"C:/Users/marcpp12/Documents/GitHub/Motor-Uni/build/vcpkg_installed/vcpkg/blds/glm/x64-windows-dbg/cmake_install.cmake",
+		"C:/Users/marcpp12/Documents/GitHub/Motor-Uni/build/vcpkg_installed/vcpkg/blds/glm/x64-windows-dbg/glm/cmake_install.cmake"
+	],
+	"Parallel" : false
+}

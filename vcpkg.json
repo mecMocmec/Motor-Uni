@@ -1,5 +1,18 @@
 {
+  "name": "motor",
+  "version": "0.1.0",
   "dependencies": [
-    "fmt"
+    "sdl3",
+    "glm",
+    "assimp",
+    "devil",
+    {
+      "name": "imgui",
+      "features": ["docking-experimental", "sdl3-binding", "opengl3-binding"]
+    },
+    {
+      "name": "glad",
+      "features": ["gl-api-46"]
+    }
   ]
 }

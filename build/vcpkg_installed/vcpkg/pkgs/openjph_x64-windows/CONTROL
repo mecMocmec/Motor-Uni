@@ -1,0 +1,7 @@
+Package: openjph
+Version: 0.31.0
+Depends: vcpkg-cmake, vcpkg-cmake-config
+Architecture: x64-windows
+Multi-Arch: same
+Abi: 54e29f4c00248d949f09501cac8d195c74d6ba1b106bca7203193a9e81b9c560
+Description: Open-source implementation of JPEG2000 Part-15 (or JPH or HTJ2K)

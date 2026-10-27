@@ -1,0 +1,23 @@
+[
+  {
+    "cmd": [
+      "C:\\Users\\marcpp12\\Documents\\GitHub\\Motor-Uni\\build\\vcpkg_installed\\vcpkg\\blds\\lcms\\x64-windows-rel\\testbed\\testcms.exe"
+    ],
+    "env": {},
+    "name": "testcms",
+    "workdir": "C:\\Users\\marcpp12\\Documents\\GitHub\\Motor-Uni\\build\\vcpkg_installed\\vcpkg\\blds\\lcms\\x64-windows-rel\\testbed",
+    "timeout": 600,
+    "suite": [
+      "Little-CMS"
+    ],
+    "is_parallel": true,
+    "priority": 0,
+    "protocol": "exitcode",
+    "depends": [
+      "34da104@@testcms@exe"
+    ],
+    "extra_paths": [
+      "C:\\Users\\marcpp12\\Documents\\GitHub\\Motor-Uni\\build\\vcpkg_installed\\vcpkg\\blds\\lcms\\x64-windows-rel\\src"
+    ]
+  }
+]

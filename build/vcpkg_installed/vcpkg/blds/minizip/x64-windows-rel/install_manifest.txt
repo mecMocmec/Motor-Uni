@@ -1,0 +1,13 @@
+C:/Users/marcpp12/Documents/GitHub/Motor-Uni/build/vcpkg_installed/vcpkg/pkgs/minizip_x64-windows/lib/minizip.lib
+C:/Users/marcpp12/Documents/GitHub/Motor-Uni/build/vcpkg_installed/vcpkg/pkgs/minizip_x64-windows/bin/minizip.dll
+C:/Users/marcpp12/Documents/GitHub/Motor-Uni/build/vcpkg_installed/vcpkg/pkgs/minizip_x64-windows/lib/cmake/minizip/minizip-shared.cmake
+C:/Users/marcpp12/Documents/GitHub/Motor-Uni/build/vcpkg_installed/vcpkg/pkgs/minizip_x64-windows/lib/cmake/minizip/minizip-shared-release.cmake
+C:/Users/marcpp12/Documents/GitHub/Motor-Uni/build/vcpkg_installed/vcpkg/pkgs/minizip_x64-windows/lib/cmake/minizip/minizipConfig.cmake
+C:/Users/marcpp12/Documents/GitHub/Motor-Uni/build/vcpkg_installed/vcpkg/pkgs/minizip_x64-windows/lib/cmake/minizip/minizipConfigVersion.cmake
+C:/Users/marcpp12/Documents/GitHub/Motor-Uni/build/vcpkg_installed/vcpkg/pkgs/minizip_x64-windows/include/minizip/crypt.h
+C:/Users/marcpp12/Documents/GitHub/Motor-Uni/build/vcpkg_installed/vcpkg/pkgs/minizip_x64-windows/include/minizip/ints.h
+C:/Users/marcpp12/Documents/GitHub/Motor-Uni/build/vcpkg_installed/vcpkg/pkgs/minizip_x64-windows/include/minizip/ioapi.h
+C:/Users/marcpp12/Documents/GitHub/Motor-Uni/build/vcpkg_installed/vcpkg/pkgs/minizip_x64-windows/include/minizip/mztools.h
+C:/Users/marcpp12/Documents/GitHub/Motor-Uni/build/vcpkg_installed/vcpkg/pkgs/minizip_x64-windows/include/minizip/unzip.h
+C:/Users/marcpp12/Documents/GitHub/Motor-Uni/build/vcpkg_installed/vcpkg/pkgs/minizip_x64-windows/include/minizip/zip.h
+C:/Users/marcpp12/Documents/GitHub/Motor-Uni/build/vcpkg_installed/vcpkg/pkgs/minizip_x64-windows/lib/pkgconfig/minizip.pc

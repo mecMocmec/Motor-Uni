@@ -1,0 +1,4 @@
+# ninja log v7
+4	845	8147892761919738	CMakeFiles/polyclipping.dir/clipper.cpp.obj	4c64b7498dbc7f82
+855	890	8147892770424810	polyclipping.lib	ecee7fb280bda61f
+890	990	8147892770789829	CMakeFiles/install.util	c2cf1206f65520e9

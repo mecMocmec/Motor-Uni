@@ -1,0 +1,6 @@
+C:/Users/marcpp12/Documents/GitHub/Motor-Uni/build/vcpkg_installed/vcpkg/blds/liblzma/x64-windows-rel/CMakeFiles/liblzma.dir
+C:/Users/marcpp12/Documents/GitHub/Motor-Uni/build/vcpkg_installed/vcpkg/blds/liblzma/x64-windows-rel/CMakeFiles/edit_cache.dir
+C:/Users/marcpp12/Documents/GitHub/Motor-Uni/build/vcpkg_installed/vcpkg/blds/liblzma/x64-windows-rel/CMakeFiles/rebuild_cache.dir
+C:/Users/marcpp12/Documents/GitHub/Motor-Uni/build/vcpkg_installed/vcpkg/blds/liblzma/x64-windows-rel/CMakeFiles/list_install_components.dir
+C:/Users/marcpp12/Documents/GitHub/Motor-Uni/build/vcpkg_installed/vcpkg/blds/liblzma/x64-windows-rel/CMakeFiles/install.dir
+C:/Users/marcpp12/Documents/GitHub/Motor-Uni/build/vcpkg_installed/vcpkg/blds/liblzma/x64-windows-rel/CMakeFiles/install/local.dir

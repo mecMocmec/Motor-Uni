@@ -1,0 +1,11 @@
+C:/Users/marcpp12/Documents/GitHub/Motor-Uni/build/vcpkg_installed/vcpkg/pkgs/tiff_x64-windows/lib/pkgconfig/libtiff-4.pc
+C:/Users/marcpp12/Documents/GitHub/Motor-Uni/build/vcpkg_installed/vcpkg/pkgs/tiff_x64-windows/lib/tiff.lib
+C:/Users/marcpp12/Documents/GitHub/Motor-Uni/build/vcpkg_installed/vcpkg/pkgs/tiff_x64-windows/bin/tiff.dll
+C:/Users/marcpp12/Documents/GitHub/Motor-Uni/build/vcpkg_installed/vcpkg/pkgs/tiff_x64-windows/include/tiff.h
+C:/Users/marcpp12/Documents/GitHub/Motor-Uni/build/vcpkg_installed/vcpkg/pkgs/tiff_x64-windows/include/tiffio.h
+C:/Users/marcpp12/Documents/GitHub/Motor-Uni/build/vcpkg_installed/vcpkg/pkgs/tiff_x64-windows/include/tiffvers.h
+C:/Users/marcpp12/Documents/GitHub/Motor-Uni/build/vcpkg_installed/vcpkg/pkgs/tiff_x64-windows/include/tiffconf.h
+C:/Users/marcpp12/Documents/GitHub/Motor-Uni/build/vcpkg_installed/vcpkg/pkgs/tiff_x64-windows/lib/cmake/tiff/tiff-targets.cmake
+C:/Users/marcpp12/Documents/GitHub/Motor-Uni/build/vcpkg_installed/vcpkg/pkgs/tiff_x64-windows/lib/cmake/tiff/tiff-targets-release.cmake
+C:/Users/marcpp12/Documents/GitHub/Motor-Uni/build/vcpkg_installed/vcpkg/pkgs/tiff_x64-windows/lib/cmake/tiff/tiff-config-version.cmake
+C:/Users/marcpp12/Documents/GitHub/Motor-Uni/build/vcpkg_installed/vcpkg/pkgs/tiff_x64-windows/lib/cmake/tiff/tiff-config.cmake

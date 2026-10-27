@@ -1,0 +1,21 @@
+# ninja log v7
+17	353	8147895287658186	CMakeFiles/png_shared.dir/pngmem.c.obj	ec3fb47f65c78fdd
+50	361	8147895287983365	CMakeFiles/png_shared.dir/pngwio.c.obj	9315d32f291b4e3
+45	365	8147895287933360	CMakeFiles/png_shared.dir/pngtrans.c.obj	1b43312673c76ada
+42	368	8147895287903362	CMakeFiles/png_shared.dir/pngset.c.obj	51a7013b16c89845
+26	371	8147895287753280	CMakeFiles/png_shared.dir/pngrio.c.obj	5a01268b475f930a
+10	374	8147895287588170	CMakeFiles/png_shared.dir/pngerror.c.obj	5dc7994d5d5f3f56
+56	377	8147895288055891	CMakeFiles/png_shared.dir/pngwtran.c.obj	7cd0a61788f06028
+53	380	8147895288015679	CMakeFiles/png_shared.dir/pngwrite.c.obj	83220a1176cfa7b0
+20	384	8147895287688187	CMakeFiles/png_shared.dir/pngpread.c.obj	b0e5aeb51d125fa4
+64	387	8147895288126317	CMakeFiles/png_shared.dir/intel/intel_init.c.obj	e0ace50302cb831f
+13	390	8147895287618182	CMakeFiles/png_shared.dir/pngget.c.obj	8621707e6de659f3
+6	393	8147895287537921	CMakeFiles/png_shared.dir/png.c.obj	ee7121e933910897
+60	396	8147895288075907	CMakeFiles/png_shared.dir/pngwutil.c.obj	8a7c084ff46dae5f
+23	399	8147895287723270	CMakeFiles/png_shared.dir/pngread.c.obj	52ad1a584b426af2
+38	402	8147895287868258	CMakeFiles/png_shared.dir/pngrutil.c.obj	9c9ca71f2bb81f1b
+30	405	8147895287773295	CMakeFiles/png_shared.dir/pngrtran.c.obj	f17d5e57916fcb99
+67	408	8147895288156346	CMakeFiles/png_shared.dir/intel/filter_sse2_intrinsics.c.obj	af66b836973d3bb7
+408	633	8147895293636015	libpng16d.dll	98227dd7bf1e85f0
+408	633	8147895293636015	libpng16d.lib	98227dd7bf1e85f0
+633	828	8147895293811298	CMakeFiles/install.util	c757ce05d1f74b84

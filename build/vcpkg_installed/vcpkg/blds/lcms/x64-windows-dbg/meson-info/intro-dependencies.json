@@ -1,0 +1,62 @@
+[
+  {
+    "name": "libjpeg",
+    "type": "pkgconfig",
+    "version": "3.2.0",
+    "compile_args": [
+      "-IC:/Users/marcpp12/Documents/GitHub/Motor-Uni/build/vcpkg_installed/x64-windows/debug/../include"
+    ],
+    "link_args": [
+      "C:/Users/marcpp12/Documents/GitHub/Motor-Uni/build/vcpkg_installed/x64-windows/debug/lib/jpeg.lib"
+    ],
+    "include_directories": [],
+    "sources": [],
+    "extra_files": [],
+    "dependencies": [],
+    "depends": [],
+    "meson_variables": [
+      "jpeg_dep"
+    ]
+  },
+  {
+    "name": "libtiff-4",
+    "type": "pkgconfig",
+    "version": "4.7.2",
+    "compile_args": [
+      "-IC:/Users/marcpp12/Documents/GitHub/Motor-Uni/build/vcpkg_installed/x64-windows/debug/../include"
+    ],
+    "link_args": [
+      "C:/Users/marcpp12/Documents/GitHub/Motor-Uni/build/vcpkg_installed/x64-windows/debug/lib/tiffd.lib"
+    ],
+    "include_directories": [],
+    "sources": [],
+    "extra_files": [],
+    "dependencies": [],
+    "depends": [],
+    "meson_variables": [
+      "tiff_dep"
+    ]
+  },
+  {
+    "name": "dep52379830884850100820904155780697378879",
+    "type": "internal",
+    "version": "2.19",
+    "compile_args": [],
+    "link_args": [],
+    "include_directories": [
+      "C:\\Users\\marcpp12\\Documents\\GitHub\\Motor-Uni\\build\\vcpkg_installed\\vcpkg\\blds\\lcms\\src\\lcms2.19.1-03b05538d0.clean\\include\\.",
+      "C:\\Users\\marcpp12\\Documents\\GitHub\\Motor-Uni\\build\\vcpkg_installed\\vcpkg\\blds\\lcms\\x64-windows-dbg\\include\\.",
+      "C:\\Users\\marcpp12\\Documents\\GitHub\\Motor-Uni\\build\\vcpkg_installed\\vcpkg\\blds\\lcms\\src\\lcms2.19.1-03b05538d0.clean\\src\\.",
+      "C:\\Users\\marcpp12\\Documents\\GitHub\\Motor-Uni\\build\\vcpkg_installed\\vcpkg\\blds\\lcms\\x64-windows-dbg\\src\\."
+    ],
+    "sources": [],
+    "extra_files": [],
+    "dependencies": [],
+    "depends": [
+      "25a6634@@lcms2@sha"
+    ],
+    "meson_variables": [
+      "liblcms2_dep"
+    ]
+  }
+]

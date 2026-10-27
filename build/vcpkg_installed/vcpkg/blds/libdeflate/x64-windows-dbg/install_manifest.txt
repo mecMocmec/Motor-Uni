@@ -1,0 +1,8 @@
+C:/Users/marcpp12/Documents/GitHub/Motor-Uni/build/vcpkg_installed/vcpkg/pkgs/libdeflate_x64-windows/debug/lib/deflate.lib
+C:/Users/marcpp12/Documents/GitHub/Motor-Uni/build/vcpkg_installed/vcpkg/pkgs/libdeflate_x64-windows/debug/bin/deflate.dll
+C:/Users/marcpp12/Documents/GitHub/Motor-Uni/build/vcpkg_installed/vcpkg/pkgs/libdeflate_x64-windows/debug/include/libdeflate.h
+C:/Users/marcpp12/Documents/GitHub/Motor-Uni/build/vcpkg_installed/vcpkg/pkgs/libdeflate_x64-windows/debug/lib/pkgconfig/libdeflate.pc
+C:/Users/marcpp12/Documents/GitHub/Motor-Uni/build/vcpkg_installed/vcpkg/pkgs/libdeflate_x64-windows/debug/lib/cmake/libdeflate/libdeflate-targets.cmake
+C:/Users/marcpp12/Documents/GitHub/Motor-Uni/build/vcpkg_installed/vcpkg/pkgs/libdeflate_x64-windows/debug/lib/cmake/libdeflate/libdeflate-targets-debug.cmake
+C:/Users/marcpp12/Documents/GitHub/Motor-Uni/build/vcpkg_installed/vcpkg/pkgs/libdeflate_x64-windows/debug/lib/cmake/libdeflate/libdeflate-config.cmake
+C:/Users/marcpp12/Documents/GitHub/Motor-Uni/build/vcpkg_installed/vcpkg/pkgs/libdeflate_x64-windows/debug/lib/cmake/libdeflate/libdeflate-config-version.cmake

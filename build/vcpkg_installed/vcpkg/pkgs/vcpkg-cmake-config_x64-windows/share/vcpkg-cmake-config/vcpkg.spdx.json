@@ -1,15 +1,15 @@
 {
-  "$schema": "https://raw.githubusercontent.com/spdx/spdx-spec/v2.3/schemas/spdx-schema.json",
-  "spdxVersion": "SPDX-2.3",
+  "$schema": "https://raw.githubusercontent.com/spdx/spdx-spec/v2.2.1/schemas/spdx-schema.json",
+  "spdxVersion": "SPDX-2.2",
   "dataLicense": "CC0-1.0",
   "SPDXID": "SPDXRef-DOCUMENT",
-  "documentNamespace": "https://spdx.org/spdxdocs/vcpkg-cmake-config-x64-windows-2026-07-21-591142f5-c2c6-4ef8-a600-4a9d048b4744",
-  "name": "vcpkg-cmake-config:x64-windows@2026-07-21 b0b5f419e1b6d4ef6060267c9beb26078883ea83be1f1372125387c62b453a46",
+  "documentNamespace": "https://spdx.org/spdxdocs/vcpkg-cmake-config-x64-windows-2026-07-21-c1f635eb-a691-408d-8e05-6e4bf2fa5cf7",
+  "name": "vcpkg-cmake-config:x64-windows@2026-07-21 d2f621e46ebc5745b500dfbac577b90cae946c197806f3e8b41ece9b9eccf669",
   "creationInfo": {
     "creators": [
-      "Tool: vcpkg-2026-07-27-98d7cb0cf1f4686a3e43aa5672b6230c1d56bce8"
+      "Tool: vcpkg-2026-03-04-4b3e4c276b5b87a649e66341e11553e8c577459c"
     ],
-    "created": "2026-10-26T16:44:01Z"
+    "created": "2026-10-27T07:25:34Z"
   },
   "relationships": [
     {
@@ -77,24 +77,12 @@
       "licenseConcluded": "MIT",
       "licenseDeclared": "NOASSERTION",
       "copyrightText": "NOASSERTION",
-      "comment": "This is the port (recipe) consumed by vcpkg.",
-      "externalRefs": [
-        {
-          "referenceCategory": "PACKAGE-MANAGER",
-          "referenceType": "purl",
-          "referenceLocator": "pkg:vcpkg/vcpkg-cmake-config@2026-07-21?triplet=x64-windows&vcs_url=git%2Bhttps%3A%2F%2Fgithub.com%2Fmicrosoft%2Fvcpkg%4051befcb03097f8d19c1c59f9ec3625e69d85322a"
-        },
-        {
-          "referenceCategory": "PERSISTENT-ID",
-          "referenceType": "gitoid",
-          "referenceLocator": "gitoid:tree:sha1:51befcb03097f8d19c1c59f9ec3625e69d85322a"
-        }
-      ]
+      "comment": "This is the port (recipe) consumed by vcpkg."
     },
     {
       "name": "vcpkg-cmake-config:x64-windows",
       "SPDXID": "SPDXRef-binary",
-      "versionInfo": "b0b5f419e1b6d4ef6060267c9beb26078883ea83be1f1372125387c62b453a46",
+      "versionInfo": "d2f621e46ebc5745b500dfbac577b90cae946c197806f3e8b41ece9b9eccf669",
       "downloadLocation": "NONE",
       "licenseConcluded": "MIT",
       "licenseDeclared": "NOASSERTION",

@@ -1,0 +1,15 @@
+# ninja log v7
+9	106	8147894877077897	CMakeFiles/libdeflate_shared.dir/lib/utils.c.obj	baa0394519e5e2ab
+5	108	8147894877041179	CMakeFiles/libdeflate_shared.dir/lib/arm/cpu_features.c.obj	86bed7fe1f5da031
+31	109	8147894877305441	CMakeFiles/libdeflate_shared.dir/lib/zlib_decompress.c.obj	66bf017725f9a851
+12	111	8147894877108011	CMakeFiles/libdeflate_shared.dir/lib/x86/cpu_features.c.obj	f88936456ba37b5a
+28	116	8147894877280264	CMakeFiles/libdeflate_shared.dir/lib/zlib_compress.c.obj	10ba53ab40222d05
+25	118	8147894877245126	CMakeFiles/libdeflate_shared.dir/lib/adler32.c.obj	af491e20ecd78c01
+15	127	8147894877138030	CMakeFiles/libdeflate_shared.dir/lib/deflate_compress.c.obj	ce14fae6e14eb8cb
+18	129	8147894877167935	CMakeFiles/libdeflate_shared.dir/lib/deflate_decompress.c.obj	4711887126258cf9
+39	130	8147894877386369	CMakeFiles/libdeflate_shared.dir/lib/gzip_compress.c.obj	a20d7db1765b5eb1
+34	135	8147894877335449	CMakeFiles/libdeflate_shared.dir/lib/crc32.c.obj	449ace71cae0f28d
+43	136	8147894877420044	CMakeFiles/libdeflate_shared.dir/lib/gzip_decompress.c.obj	20df9c5218550ac0
+136	336	8147894880177576	deflate.dll	849dddbbf71e96a8
+136	336	8147894880177576	deflate.lib	849dddbbf71e96a8
+336	462	8147894880349616	CMakeFiles/install.util	cf8de50d74502b4e

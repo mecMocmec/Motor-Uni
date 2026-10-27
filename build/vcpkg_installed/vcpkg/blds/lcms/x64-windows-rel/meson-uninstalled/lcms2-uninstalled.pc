@@ -1,0 +1,10 @@
+prefix=C:/Users/marcpp12/Documents/GitHub/Motor-Uni/build/vcpkg_installed/vcpkg/blds/lcms/x64-windows-rel
+includedir=${prefix}/include
+libdir=${prefix}/lib
+srcdir=C:/Users/marcpp12/Documents/GitHub/Motor-Uni/build/vcpkg_installed/vcpkg/blds/lcms/src/lcms2.19.1-03b05538d0.clean
+
+Name: lcms2
+Description: LCMS Color Management Library
+Version: 2.19
+Libs: -L${prefix}/src -llcms2
+Cflags: -I${prefix}/include -I${srcdir}/include -I${prefix}/src -I${srcdir}/src

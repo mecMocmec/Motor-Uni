@@ -1,0 +1,114 @@
+{
+	"abstract" : true,
+	"backtrace" : 12,
+	"backtraceGraph" : 
+	{
+		"commands" : 
+		[
+			"_add_library",
+			"add_library",
+			"include",
+			"_find_package",
+			"find_package",
+			"__find_dependency_common",
+			"find_dependency"
+		],
+		"files" : 
+		[
+			"C:/Program Files/Microsoft Visual Studio/18/Community/VC/vcpkg/scripts/buildsystems/vcpkg.cmake",
+			"build/vcpkg_installed/x64-windows/share/sdl3/SDL3headersTargets.cmake",
+			"build/vcpkg_installed/x64-windows/share/sdl3/SDL3Config.cmake",
+			"C:/Program Files/Microsoft Visual Studio/18/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-4.2/Modules/CMakeFindDependencyMacro.cmake",
+			"build/vcpkg_installed/x64-windows/share/imgui/imgui-config.cmake",
+			"Editor/CMakeLists.txt"
+		],
+		"nodes" : 
+		[
+			{
+				"file" : 5
+			},
+			{
+				"command" : 4,
+				"file" : 5,
+				"line" : 1,
+				"parent" : 0
+			},
+			{
+				"command" : 3,
+				"file" : 0,
+				"line" : 908,
+				"parent" : 1
+			},
+			{
+				"file" : 4,
+				"parent" : 2
+			},
+			{
+				"command" : 6,
+				"file" : 4,
+				"line" : 42,
+				"parent" : 3
+			},
+			{
+				"command" : 5,
+				"file" : 3,
+				"line" : 125,
+				"parent" : 4
+			},
+			{
+				"command" : 4,
+				"file" : 3,
+				"line" : 93,
+				"parent" : 5
+			},
+			{
+				"command" : 3,
+				"file" : 0,
+				"line" : 908,
+				"parent" : 6
+			},
+			{
+				"file" : 2,
+				"parent" : 7
+			},
+			{
+				"command" : 2,
+				"file" : 2,
+				"line" : 33,
+				"parent" : 8
+			},
+			{
+				"file" : 1,
+				"parent" : 9
+			},
+			{
+				"command" : 1,
+				"file" : 1,
+				"line" : 58,
+				"parent" : 10
+			},
+			{
+				"command" : 0,
+				"file" : 0,
+				"line" : 653,
+				"parent" : 11
+			}
+		]
+	},
+	"codemodelVersion" : 
+	{
+		"major" : 2,
+		"minor" : 9
+	},
+	"id" : "SDL3::Headers::@b58ce4ae47b5f4fc4f99",
+	"imported" : true,
+	"local" : true,
+	"name" : "SDL3::Headers",
+	"paths" : 
+	{
+		"build" : "Editor",
+		"source" : "Editor"
+	},
+	"sources" : [],
+	"type" : "INTERFACE_LIBRARY"
+}

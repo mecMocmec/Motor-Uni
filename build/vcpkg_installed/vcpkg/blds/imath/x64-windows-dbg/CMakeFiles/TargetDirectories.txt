@@ -1,0 +1,17 @@
+C:/Users/marcpp12/Documents/GitHub/Motor-Uni/build/vcpkg_installed/vcpkg/blds/imath/x64-windows-dbg/CMakeFiles/uninstall.dir
+C:/Users/marcpp12/Documents/GitHub/Motor-Uni/build/vcpkg_installed/vcpkg/blds/imath/x64-windows-dbg/CMakeFiles/edit_cache.dir
+C:/Users/marcpp12/Documents/GitHub/Motor-Uni/build/vcpkg_installed/vcpkg/blds/imath/x64-windows-dbg/CMakeFiles/rebuild_cache.dir
+C:/Users/marcpp12/Documents/GitHub/Motor-Uni/build/vcpkg_installed/vcpkg/blds/imath/x64-windows-dbg/CMakeFiles/list_install_components.dir
+C:/Users/marcpp12/Documents/GitHub/Motor-Uni/build/vcpkg_installed/vcpkg/blds/imath/x64-windows-dbg/CMakeFiles/install.dir
+C:/Users/marcpp12/Documents/GitHub/Motor-Uni/build/vcpkg_installed/vcpkg/blds/imath/x64-windows-dbg/CMakeFiles/install/local.dir
+C:/Users/marcpp12/Documents/GitHub/Motor-Uni/build/vcpkg_installed/vcpkg/blds/imath/x64-windows-dbg/config/CMakeFiles/edit_cache.dir
+C:/Users/marcpp12/Documents/GitHub/Motor-Uni/build/vcpkg_installed/vcpkg/blds/imath/x64-windows-dbg/config/CMakeFiles/rebuild_cache.dir
+C:/Users/marcpp12/Documents/GitHub/Motor-Uni/build/vcpkg_installed/vcpkg/blds/imath/x64-windows-dbg/config/CMakeFiles/list_install_components.dir
+C:/Users/marcpp12/Documents/GitHub/Motor-Uni/build/vcpkg_installed/vcpkg/blds/imath/x64-windows-dbg/config/CMakeFiles/install.dir
+C:/Users/marcpp12/Documents/GitHub/Motor-Uni/build/vcpkg_installed/vcpkg/blds/imath/x64-windows-dbg/config/CMakeFiles/install/local.dir
+C:/Users/marcpp12/Documents/GitHub/Motor-Uni/build/vcpkg_installed/vcpkg/blds/imath/x64-windows-dbg/src/Imath/CMakeFiles/Imath.dir
+C:/Users/marcpp12/Documents/GitHub/Motor-Uni/build/vcpkg_installed/vcpkg/blds/imath/x64-windows-dbg/src/Imath/CMakeFiles/edit_cache.dir
+C:/Users/marcpp12/Documents/GitHub/Motor-Uni/build/vcpkg_installed/vcpkg/blds/imath/x64-windows-dbg/src/Imath/CMakeFiles/rebuild_cache.dir
+C:/Users/marcpp12/Documents/GitHub/Motor-Uni/build/vcpkg_installed/vcpkg/blds/imath/x64-windows-dbg/src/Imath/CMakeFiles/list_install_components.dir
+C:/Users/marcpp12/Documents/GitHub/Motor-Uni/build/vcpkg_installed/vcpkg/blds/imath/x64-windows-dbg/src/Imath/CMakeFiles/install.dir
+C:/Users/marcpp12/Documents/GitHub/Motor-Uni/build/vcpkg_installed/vcpkg/blds/imath/x64-windows-dbg/src/Imath/CMakeFiles/install/local.dir
