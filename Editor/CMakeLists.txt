@@ -1,6 +1,9 @@
 find_package(imgui CONFIG REQUIRED)
 
-add_executable(Editor src/main.cpp)
+add_executable(Editor
+    src/main.cpp
+    src/EditorUI.cpp
+)
 target_link_libraries(Editor PRIVATE Engine imgui::imgui)
 
 # Copia los recursos junto al .exe

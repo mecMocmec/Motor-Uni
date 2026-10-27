@@ -7,6 +7,7 @@ find_package(DevIL REQUIRED)
 add_library(Engine STATIC
     src/Application.cpp
     src/Log.cpp
+    src/Renderer.cpp
 )
 target_include_directories(Engine PUBLIC include)
 target_link_libraries(Engine

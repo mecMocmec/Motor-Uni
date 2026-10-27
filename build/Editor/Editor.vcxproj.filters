@@ -4,6 +4,9 @@
     <ClCompile Include="C:\Users\marcpp12\Documents\GitHub\Motor-Uni\Editor\src\main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="C:\Users\marcpp12\Documents\GitHub\Motor-Uni\Editor\src\EditorUI.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="C:\Users\marcpp12\Documents\GitHub\Motor-Uni\Editor\CMakeLists.txt" />

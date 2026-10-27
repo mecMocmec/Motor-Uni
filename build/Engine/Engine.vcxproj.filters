@@ -7,6 +7,9 @@
     <ClCompile Include="C:\Users\marcpp12\Documents\GitHub\Motor-Uni\Engine\src\Log.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="C:\Users\marcpp12\Documents\GitHub\Motor-Uni\Engine\src\Renderer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="C:\Users\marcpp12\Documents\GitHub\Motor-Uni\Engine\CMakeLists.txt" />

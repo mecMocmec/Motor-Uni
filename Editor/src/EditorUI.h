@@ -1,0 +1,39 @@
+#pragma once
+
+#include <SDL3/SDL.h>
+
+#include <string>
+#include <vector>
+
+namespace Engine
+{
+class Application;
+}
+
+namespace Editor
+{
+class EditorUI
+{
+public:
+    EditorUI();
+    ~EditorUI();
+
+    bool Init(Engine::Application& app);
+    void Shutdown();
+
+    void ProcessEvent(const SDL_Event& event);
+    void BeginFrame();
+    void Draw(Engine::Application& app);
+    void EndFrame(Engine::Application& app);
+
+private:
+    void DrawMainMenu(Engine::Application& app);
+    void DrawScenePanel(Engine::Application& app);
+    void DrawConsolePanel();
+
+    std::vector<std::string> m_consoleLines;
+    bool m_showScene = true;
+    bool m_showConsole = true;
+    bool m_initialised = false;
+};
+} // namespace Editor

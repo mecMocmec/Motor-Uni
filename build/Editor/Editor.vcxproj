@@ -466,6 +466,7 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="C:\Users\marcpp12\Documents\GitHub\Motor-Uni\Editor\src\main.cpp" />
+    <ClCompile Include="C:\Users\marcpp12\Documents\GitHub\Motor-Uni\Editor\src\EditorUI.cpp" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

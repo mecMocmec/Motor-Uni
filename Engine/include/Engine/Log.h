@@ -1,13 +1,14 @@
 #pragma once
 
+#include <format>
 #include <functional>
 #include <string>
 #include <string_view>
 
 namespace Engine
 {
-// El motor registra mensajes; el editor se suscribe con un sink.
-// Así el motor no conoce ImGui.
+// El motor escribe mensajes; el editor se suscribe con un sink.
+// Així el motor no coneix ImGui.
 class Log
 {
 public:
@@ -18,4 +19,5 @@ public:
 };
 } // namespace Engine
 
-#define ENGINE_LOG(msg) ::Engine::Log::Write(msg)
+#define ENGINE_LOG(msg)  ::Engine::Log::Write(msg)
+#define ENGINE_LOGF(...) ::Engine::Log::Write(std::format(__VA_ARGS__))

@@ -50,7 +50,7 @@
 			{
 				"command" : 2,
 				"file" : 1,
-				"line" : 4,
+				"line" : 7,
 				"parent" : 0
 			},
 			{
@@ -59,7 +59,7 @@
 			{
 				"command" : 2,
 				"file" : 2,
-				"line" : 12,
+				"line" : 13,
 				"parent" : 4
 			},
 			{
@@ -150,7 +150,8 @@
 			},
 			"sourceIndexes" : 
 			[
-				0
+				0,
+				1
 			]
 		}
 	],
@@ -269,7 +270,8 @@
 			"name" : "Source Files",
 			"sourceIndexes" : 
 			[
-				0
+				0,
+				1
 			]
 		}
 	],
@@ -279,6 +281,12 @@
 			"backtrace" : 2,
 			"compileGroupIndex" : 0,
 			"path" : "Editor/src/main.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 2,
+			"compileGroupIndex" : 0,
+			"path" : "Editor/src/EditorUI.cpp",
 			"sourceGroupIndex" : 0
 		}
 	],
