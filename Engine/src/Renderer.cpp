@@ -1,6 +1,10 @@
 #include "Engine/Renderer.h"
 
+#include "Engine/ComponentMesh.h"
+#include "Engine/ComponentTransform.h"
+#include "Engine/GameObject.h"
 #include "Engine/Log.h"
+#include "Engine/Scene.h"
 #include "GLInclude.h"
 
 #include <glm/glm.hpp>
@@ -13,9 +17,11 @@ namespace
 {
 constexpr const char* kVertexShader = R"(#version 460 core
 layout (location = 0) in vec3 position;
-layout (location = 1) in vec3 color;
+layout (location = 1) in vec3 normal;
+layout (location = 2) in vec2 texCoord;
 
-out vec3 vColor;
+out vec3 vNormal;
+out vec2 vTexCoord;
 
 uniform mat4 model_matrix;
 uniform mat4 view;
@@ -24,17 +30,20 @@ uniform mat4 projection;
 void main()
 {
     gl_Position = projection * view * model_matrix * vec4(position, 1.0);
-    vColor = color;
+    vNormal = mat3(transpose(inverse(model_matrix))) * normal;
+    vTexCoord = texCoord;
 }
 )";
 
+// De moment es pinta la normal com a color; amb les textures s'hi afegirà el mostreig.
 constexpr const char* kFragmentShader = R"(#version 460 core
-in vec3 vColor;
+in vec3 vNormal;
+in vec2 vTexCoord;
 out vec4 color;
 
 void main()
 {
-    color = vec4(vColor, 1.0);
+    color = vec4(normalize(vNormal) * 0.5 + 0.5, 1.0);
 }
 )";
 
@@ -56,28 +65,6 @@ GLuint CompileShader(GLenum type, const char* source)
     }
     return shader;
 }
-
-// 8 vèrtexs únics: posició (xyz) + color (rgb)
-constexpr float kCubeVertices[] = {
-    -0.5f, -0.5f, -0.5f, 0.0f, 0.0f, 0.0f, // 0
-     0.5f, -0.5f, -0.5f, 1.0f, 0.0f, 0.0f, // 1
-     0.5f,  0.5f, -0.5f, 1.0f, 1.0f, 0.0f, // 2
-    -0.5f,  0.5f, -0.5f, 0.0f, 1.0f, 0.0f, // 3
-    -0.5f, -0.5f,  0.5f, 0.0f, 0.0f, 1.0f, // 4
-     0.5f, -0.5f,  0.5f, 1.0f, 0.0f, 1.0f, // 5
-     0.5f,  0.5f,  0.5f, 1.0f, 1.0f, 1.0f, // 6
-    -0.5f,  0.5f,  0.5f, 0.0f, 1.0f, 1.0f, // 7
-};
-
-// Triangles en sentit antihorari vistos des de fora
-constexpr unsigned int kCubeIndices[] = {
-    4, 5, 6, 4, 6, 7, // +z
-    1, 0, 3, 1, 3, 2, // -z
-    5, 1, 2, 5, 2, 6, // +x
-    0, 4, 7, 0, 7, 3, // -x
-    7, 6, 2, 7, 2, 3, // +y
-    0, 1, 5, 0, 5, 4, // -y
-};
 } // namespace
 
 bool Renderer::Init()
@@ -110,26 +97,6 @@ bool Renderer::Init()
     m_locView = glGetUniformLocation(m_program, "view");
     m_locProjection = glGetUniformLocation(m_program, "projection");
 
-    glGenVertexArrays(1, &m_vao);
-    glBindVertexArray(m_vao);
-
-    glGenBuffers(1, &m_vbo);
-    glBindBuffer(GL_ARRAY_BUFFER, m_vbo);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(kCubeVertices), kCubeVertices, GL_STATIC_DRAW);
-
-    glGenBuffers(1, &m_ebo);
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_ebo);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(kCubeIndices), kCubeIndices, GL_STATIC_DRAW);
-    m_indexCount = static_cast<int>(sizeof(kCubeIndices) / sizeof(kCubeIndices[0]));
-
-    constexpr GLsizei stride = 6 * sizeof(float);
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, stride, reinterpret_cast<void*>(0));
-    glEnableVertexAttribArray(0);
-    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, stride, reinterpret_cast<void*>(3 * sizeof(float)));
-    glEnableVertexAttribArray(1);
-
-    glBindVertexArray(0);
-
     ResizeTarget(800, 600);
     ENGINE_LOG("Renderer initialised");
     return m_fbo != 0;
@@ -138,11 +105,8 @@ bool Renderer::Init()
 void Renderer::Shutdown()
 {
     DestroyTarget();
-    glDeleteBuffers(1, &m_vbo);
-    glDeleteBuffers(1, &m_ebo);
-    glDeleteVertexArrays(1, &m_vao);
     glDeleteProgram(m_program);
-    m_vbo = m_ebo = m_vao = m_program = 0;
+    m_program = 0;
 }
 
 void Renderer::DestroyTarget()
@@ -190,7 +154,7 @@ void Renderer::ResizeTarget(int width, int height)
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
 }
 
-void Renderer::RenderScene(float timeSeconds)
+void Renderer::RenderScene(const Scene& scene)
 {
     if (m_fbo == 0)
     {
@@ -205,21 +169,40 @@ void Renderer::RenderScene(float timeSeconds)
     glEnable(GL_DEPTH_TEST);
     glEnable(GL_CULL_FACE);
 
+    // Càmera fixa de moment; la càmera estil Unity arriba en un pas posterior.
     const float aspect = static_cast<float>(m_width) / static_cast<float>(m_height);
-    const glm::mat4 model = glm::rotate(glm::mat4(1.0f), timeSeconds, glm::normalize(glm::vec3(0.5f, 1.0f, 0.0f)));
     const glm::mat4 view = glm::lookAt(glm::vec3(2.5f, 2.0f, 3.5f), glm::vec3(0.0f), glm::vec3(0.0f, 1.0f, 0.0f));
     const glm::mat4 projection = glm::perspective(glm::radians(60.0f), aspect, 0.1f, 100.0f);
 
     glUseProgram(m_program);
-    glUniformMatrix4fv(m_locModel, 1, GL_FALSE, glm::value_ptr(model));
     glUniformMatrix4fv(m_locView, 1, GL_FALSE, glm::value_ptr(view));
     glUniformMatrix4fv(m_locProjection, 1, GL_FALSE, glm::value_ptr(projection));
 
-    glBindVertexArray(m_vao);
-    glDrawElements(GL_TRIANGLES, m_indexCount, GL_UNSIGNED_INT, nullptr);
-    glBindVertexArray(0);
-    glUseProgram(0);
+    DrawGameObject(scene.GetRoot());
 
+    glUseProgram(0);
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
+}
+
+void Renderer::DrawGameObject(const GameObject& gameObject) const
+{
+    // Un GameObject desactivat amaga també tot el seu subarbre.
+    if (!gameObject.IsActive())
+    {
+        return;
+    }
+
+    const ComponentMesh* meshComponent = gameObject.GetComponent<ComponentMesh>();
+    if (meshComponent != nullptr && meshComponent->IsActive() && meshComponent->GetMesh() != nullptr)
+    {
+        const glm::mat4& model = gameObject.GetTransform().GetGlobalMatrix();
+        glUniformMatrix4fv(m_locModel, 1, GL_FALSE, glm::value_ptr(model));
+        meshComponent->GetMesh()->Draw();
+    }
+
+    for (const auto& child : gameObject.GetChildren())
+    {
+        DrawGameObject(*child);
+    }
 }
 } // namespace Engine

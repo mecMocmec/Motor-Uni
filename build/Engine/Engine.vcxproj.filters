@@ -4,10 +4,25 @@
     <ClCompile Include="C:\Users\marcpp12\Documents\GitHub\Motor-Uni\Engine\src\Application.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="C:\Users\marcpp12\Documents\GitHub\Motor-Uni\Engine\src\ComponentTransform.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\marcpp12\Documents\GitHub\Motor-Uni\Engine\src\GameObject.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="C:\Users\marcpp12\Documents\GitHub\Motor-Uni\Engine\src\Log.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="C:\Users\marcpp12\Documents\GitHub\Motor-Uni\Engine\src\Mesh.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\marcpp12\Documents\GitHub\Motor-Uni\Engine\src\Primitives.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="C:\Users\marcpp12\Documents\GitHub\Motor-Uni\Engine\src\Renderer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\marcpp12\Documents\GitHub\Motor-Uni\Engine\src\Scene.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

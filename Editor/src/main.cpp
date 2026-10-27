@@ -22,6 +22,7 @@ int main()
     while (app.IsRunning())
     {
         app.PumpEvents([&ui](const SDL_Event& event) { ui.ProcessEvent(event); });
+        app.Update();
 
         ui.BeginFrame();
         ui.Draw(app);

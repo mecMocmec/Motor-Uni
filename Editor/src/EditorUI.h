@@ -8,7 +8,9 @@
 namespace Engine
 {
 class Application;
-}
+class GameObject;
+class Scene;
+} // namespace Engine
 
 namespace Editor
 {
@@ -30,10 +32,18 @@ private:
     void DrawMainMenu(Engine::Application& app);
     void DrawScenePanel(Engine::Application& app);
     void DrawConsolePanel();
+    void DrawHierarchyPanel(Engine::Scene& scene);
+    void DrawHierarchyNode(Engine::Scene& scene, Engine::GameObject& gameObject, Engine::GameObject*& toDelete,
+                           Engine::GameObject*& addChildTo);
+    void DrawInspectorPanel(Engine::Scene& scene);
+    void DrawTransformSection(Engine::GameObject& gameObject);
+    void DrawMeshSection(Engine::GameObject& gameObject);
 
     std::vector<std::string> m_consoleLines;
     bool m_showScene = true;
     bool m_showConsole = true;
+    bool m_showHierarchy = true;
+    bool m_showInspector = true;
     bool m_initialised = false;
 };
 } // namespace Editor

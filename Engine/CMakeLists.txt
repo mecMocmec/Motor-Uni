@@ -6,8 +6,13 @@ find_package(DevIL REQUIRED)
 
 add_library(Engine STATIC
     src/Application.cpp
+    src/ComponentTransform.cpp
+    src/GameObject.cpp
     src/Log.cpp
+    src/Mesh.cpp
+    src/Primitives.cpp
     src/Renderer.cpp
+    src/Scene.cpp
 )
 target_include_directories(Engine PUBLIC include)
 target_link_libraries(Engine

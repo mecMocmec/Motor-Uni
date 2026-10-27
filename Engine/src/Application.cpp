@@ -1,6 +1,8 @@
 #include "Engine/Application.h"
 
+#include "Engine/ComponentMesh.h"
 #include "Engine/Log.h"
+#include "Engine/Primitives.h"
 #include "GLInclude.h"
 
 namespace Engine
@@ -58,6 +60,10 @@ bool Application::Init(const char* title, int width, int height)
         return false;
     }
 
+    // Escena inicial: un cub perquè hi hagi alguna cosa a la pantalla.
+    GameObject& cube = m_scene.CreateGameObject("Cube");
+    cube.AddComponent<ComponentMesh>(Primitives::CreateCube());
+
     m_running = true;
     return true;
 }
@@ -66,6 +72,8 @@ void Application::Shutdown()
 {
     if (m_glContext != nullptr)
     {
+        // Les malles alliberen buffers d'OpenGL: cal destruir-les abans del context.
+        m_scene.Clear();
         m_renderer.Shutdown();
         SDL_GL_DestroyContext(m_glContext);
         m_glContext = nullptr;
@@ -93,6 +101,11 @@ void Application::PumpEvents(const std::function<void(const SDL_Event&)>& onEven
             m_running = false;
         }
     }
+}
+
+void Application::Update()
+{
+    m_scene.Update();
 }
 
 void Application::ClearBackbuffer()

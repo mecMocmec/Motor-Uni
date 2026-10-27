@@ -2,10 +2,10 @@
 	"artifacts" : 
 	[
 		{
-			"path" : "Editor/RelWithDebInfo/Editor.exe"
+			"path" : "Editor/Debug/Editor.exe"
 		},
 		{
-			"path" : "Editor/RelWithDebInfo/Editor.pdb"
+			"path" : "Editor/Debug/Editor.pdb"
 		}
 	],
 	"backtrace" : 2,
@@ -59,7 +59,7 @@
 			{
 				"command" : 2,
 				"file" : 2,
-				"line" : 13,
+				"line" : 18,
 				"parent" : 4
 			},
 			{
@@ -124,7 +124,7 @@
 			"compileCommandFragments" : 
 			[
 				{
-					"fragment" : "/DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /Zi /O2 /Ob1 /DNDEBUG -std:c++20 -MD -Zi"
+					"fragment" : "/DWIN32 /D_WINDOWS /W3 /GR /EHsc /MDd /Zi /Ob0 /Od /RTC1 -std:c++20 -MDd -Zi"
 				}
 			],
 			"includes" : 
@@ -158,11 +158,11 @@
 	"dependencies" : 
 	[
 		{
-			"backtrace" : 3,
-			"id" : "Engine::@8f69bdd092c897d92c1e"
+			"id" : "ZERO_CHECK::@6890427a1f51a3e7e1df"
 		},
 		{
-			"id" : "ZERO_CHECK::@6890427a1f51a3e7e1df"
+			"backtrace" : 3,
+			"id" : "Engine::@8f69bdd092c897d92c1e"
 		}
 	],
 	"id" : "Editor::@b58ce4ae47b5f4fc4f99",
@@ -171,7 +171,7 @@
 		"commandFragments" : 
 		[
 			{
-				"fragment" : "/DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /Zi /O2 /Ob1 /DNDEBUG -MD -Zi",
+				"fragment" : "/DWIN32 /D_WINDOWS /W3 /GR /EHsc /MDd /Zi /Ob0 /Od /RTC1 -MDd -Zi",
 				"role" : "flags"
 			},
 			{
@@ -184,32 +184,32 @@
 			},
 			{
 				"backtrace" : 3,
-				"fragment" : "..\\Engine\\RelWithDebInfo\\Engine.lib",
+				"fragment" : "..\\Engine\\Debug\\Engine.lib",
 				"role" : "libraries"
 			},
 			{
 				"backtrace" : 3,
-				"fragment" : "..\\vcpkg_installed\\x64-windows\\lib\\imgui.lib",
+				"fragment" : "..\\vcpkg_installed\\x64-windows\\debug\\lib\\imguid.lib",
 				"role" : "libraries"
 			},
 			{
 				"backtrace" : 5,
-				"fragment" : "..\\vcpkg_installed\\x64-windows\\lib\\SDL3.lib",
+				"fragment" : "..\\vcpkg_installed\\x64-windows\\debug\\lib\\SDL3.lib",
 				"role" : "libraries"
 			},
 			{
 				"backtrace" : 5,
-				"fragment" : "..\\vcpkg_installed\\x64-windows\\lib\\glad.lib",
+				"fragment" : "..\\vcpkg_installed\\x64-windows\\debug\\lib\\glad.lib",
 				"role" : "libraries"
 			},
 			{
 				"backtrace" : 5,
-				"fragment" : "..\\vcpkg_installed\\x64-windows\\lib\\glm.lib",
+				"fragment" : "..\\vcpkg_installed\\x64-windows\\debug\\lib\\glm.lib",
 				"role" : "libraries"
 			},
 			{
 				"backtrace" : 5,
-				"fragment" : "..\\vcpkg_installed\\x64-windows\\lib\\assimp-vc145-mt.lib",
+				"fragment" : "..\\vcpkg_installed\\x64-windows\\debug\\lib\\assimp-vc145-mtd.lib",
 				"role" : "libraries"
 			},
 			{
@@ -229,7 +229,7 @@
 			},
 			{
 				"backtrace" : 11,
-				"fragment" : "..\\vcpkg_installed\\x64-windows\\lib\\SDL3.lib",
+				"fragment" : "..\\vcpkg_installed\\x64-windows\\debug\\lib\\SDL3.lib",
 				"role" : "libraries"
 			},
 			{
