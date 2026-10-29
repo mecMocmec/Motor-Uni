@@ -1,8 +1,11 @@
 #pragma once
 
+#include "Engine/Texture.h"
+
 #include <glm/glm.hpp>
 
 #include <cstdint>
+#include <memory>
 
 namespace Engine
 {
@@ -34,6 +37,9 @@ private:
     std::int32_t m_locModel = -1;
     std::int32_t m_locView = -1;
     std::int32_t m_locProjection = -1;
+    std::int32_t m_locSampler = -1;
+    std::int32_t m_locUseTexture = -1;
+    std::shared_ptr<Texture> m_checkers;
 
     glm::vec3 m_cameraPosition{2.5f, 2.0f, 3.5f};
     glm::vec3 m_cameraTarget{0.0f};

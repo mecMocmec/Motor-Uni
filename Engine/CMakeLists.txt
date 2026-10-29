@@ -14,6 +14,7 @@ add_library(Engine STATIC
     src/Primitives.cpp
     src/Renderer.cpp
     src/Scene.cpp
+    src/Texture.cpp
 )
 target_include_directories(Engine PUBLIC include)
 target_link_libraries(Engine

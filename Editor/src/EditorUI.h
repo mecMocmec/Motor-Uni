@@ -38,6 +38,7 @@ private:
     void DrawInspectorPanel(Engine::Scene& scene);
     void DrawTransformSection(Engine::GameObject& gameObject);
     void DrawMeshSection(Engine::GameObject& gameObject);
+    void DrawTextureSection(Engine::GameObject& gameObject);
 
     std::vector<std::string> m_consoleLines;
     bool m_showScene = true;

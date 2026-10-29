@@ -1,9 +1,11 @@
 #include "Engine/Application.h"
 
 #include "Engine/ComponentMesh.h"
+#include "Engine/ComponentTexture.h"
 #include "Engine/Log.h"
 #include "Engine/ModelImporter.h"
 #include "Engine/Primitives.h"
+#include "Engine/Texture.h"
 #include "GLInclude.h"
 #include "PathUtil.h"
 
@@ -21,6 +23,29 @@ std::string ToLower(std::string text)
 {
     std::transform(text.begin(), text.end(), text.begin(), [](unsigned char c) { return static_cast<char>(std::tolower(c)); });
     return text;
+}
+
+// Aplica la textura a tots els GameObjects amb malla del subarbre. Retorna quants n'ha modificat.
+int ApplyTexture(GameObject& gameObject, const std::shared_ptr<Texture>& texture)
+{
+    int applied = 0;
+    if (gameObject.GetComponent<ComponentMesh>() != nullptr)
+    {
+        if (ComponentTexture* component = gameObject.GetComponent<ComponentTexture>())
+        {
+            component->SetTexture(texture);
+        }
+        else
+        {
+            gameObject.AddComponent<ComponentTexture>(texture);
+        }
+        ++applied;
+    }
+    for (const auto& child : gameObject.GetChildren())
+    {
+        applied += ApplyTexture(*child, texture);
+    }
+    return applied;
 }
 
 // Extensió en minúscules, amb el punt (".fbx"); buida si no en té.
@@ -90,6 +115,7 @@ bool Application::Init(const char* title, int width, int height)
     }
 
     ModelImporter::Init();
+    Texture::InitLoader();
     LoadDefaultModel();
 
     m_running = true;
@@ -107,6 +133,7 @@ void Application::Shutdown()
         m_glContext = nullptr;
     }
     ModelImporter::Shutdown();
+    Texture::ShutdownLoader();
     if (m_window != nullptr)
     {
         SDL_DestroyWindow(m_window);
@@ -170,6 +197,7 @@ void Application::LoadDefaultModel()
     const char* basePath = SDL_GetBasePath();
     const std::filesystem::path resources = std::filesystem::path(basePath != nullptr ? basePath : "") / "Assets" / "Resources";
     ENGINE_LOGF("Looking for the default model in '{}'", ToUtf8(resources));
+    ModelImporter::SetResourcesRoot(ToUtf8(resources)); // també s'hi buscaran les textures
 
     std::error_code error;
     if (std::filesystem::is_directory(resources, error))
@@ -204,7 +232,16 @@ void Application::HandleDroppedFile(const std::string& utf8Path)
     }
     else if (extension == ".png" || extension == ".dds")
     {
-        ENGINE_LOG("Texture drag & drop will be available in the next step (DevIL)");
+        GameObject* selected = m_scene.GetSelected();
+        if (selected == nullptr)
+        {
+            ENGINE_LOG("Select a GameObject before dropping a texture");
+            return;
+        }
+        if (const std::shared_ptr<Texture> texture = Texture::LoadFromFile(utf8Path))
+        {
+            ENGINE_LOGF("Texture applied to {} GameObject(s) under '{}'", ApplyTexture(*selected, texture), selected->GetName());
+        }
     }
     else
     {

@@ -1,6 +1,7 @@
 #include "Engine/Renderer.h"
 
 #include "Engine/ComponentMesh.h"
+#include "Engine/ComponentTexture.h"
 #include "Engine/ComponentTransform.h"
 #include "Engine/GameObject.h"
 #include "Engine/Log.h"
@@ -46,9 +47,20 @@ in vec3 vNormal;
 in vec2 vTexCoord;
 out vec4 color;
 
+uniform sampler2D ourTexture;
+uniform int use_texture;
+
 void main()
 {
-    color = vec4(normalize(vNormal) * 0.5 + 0.5, 1.0);
+    if (use_texture == 1)
+    {
+        color = texture(ourTexture, vTexCoord);
+    }
+    else
+    {
+        // Sense textura: es pinta la normal com a color.
+        color = vec4(normalize(vNormal) * 0.5 + 0.5, 1.0);
+    }
 }
 )";
 
@@ -101,6 +113,10 @@ bool Renderer::Init()
     m_locModel = glGetUniformLocation(m_program, "model_matrix");
     m_locView = glGetUniformLocation(m_program, "view");
     m_locProjection = glGetUniformLocation(m_program, "projection");
+    m_locSampler = glGetUniformLocation(m_program, "ourTexture");
+    m_locUseTexture = glGetUniformLocation(m_program, "use_texture");
+
+    m_checkers = Texture::CreateCheckers();
 
     ResizeTarget(800, 600);
     ENGINE_LOG("Renderer initialised");
@@ -109,6 +125,7 @@ bool Renderer::Init()
 
 void Renderer::Shutdown()
 {
+    m_checkers.reset();
     DestroyTarget();
     glDeleteProgram(m_program);
     m_program = 0;
@@ -182,6 +199,7 @@ void Renderer::RenderScene(const Scene& scene)
     glUseProgram(m_program);
     glUniformMatrix4fv(m_locView, 1, GL_FALSE, glm::value_ptr(view));
     glUniformMatrix4fv(m_locProjection, 1, GL_FALSE, glm::value_ptr(projection));
+    glUniform1i(m_locSampler, 0); // unitat de textura 0
 
     DrawGameObject(scene.GetRoot());
 
@@ -214,7 +232,27 @@ void Renderer::DrawGameObject(const GameObject& gameObject) const
     {
         const glm::mat4& model = gameObject.GetTransform().GetGlobalMatrix();
         glUniformMatrix4fv(m_locModel, 1, GL_FALSE, glm::value_ptr(model));
+
+        const Texture* texture = nullptr;
+        const ComponentTexture* textureComponent = gameObject.GetComponent<ComponentTexture>();
+        if (textureComponent != nullptr && textureComponent->IsActive())
+        {
+            texture = textureComponent->UseCheckers() ? m_checkers.get() : textureComponent->GetTexture().get();
+        }
+
+        glUniform1i(m_locUseTexture, texture != nullptr ? 1 : 0);
+        if (texture != nullptr)
+        {
+            glActiveTexture(GL_TEXTURE0);
+            glBindTexture(GL_TEXTURE_2D, texture->GetId());
+        }
+
         meshComponent->GetMesh()->Draw();
+
+        if (texture != nullptr)
+        {
+            glBindTexture(GL_TEXTURE_2D, 0); // sempre deslliguem la textura després de fer-la servir
+        }
     }
 
     for (const auto& child : gameObject.GetChildren())

@@ -1,6 +1,7 @@
 #include "Engine/ModelImporter.h"
 
 #include "Engine/ComponentMesh.h"
+#include "Engine/ComponentTexture.h"
 #include "Engine/ComponentTransform.h"
 #include "Engine/GameObject.h"
 #include "Engine/Log.h"
@@ -11,18 +12,42 @@
 #include <assimp/postprocess.h>
 #include <assimp/scene.h>
 
+#include <algorithm>
+#include <cctype>
 #include <chrono>
+#include <filesystem>
 #include <memory>
+#include <system_error>
 #include <vector>
 
 namespace Engine::ModelImporter
 {
 namespace
 {
-using MeshCache = std::vector<std::shared_ptr<Mesh>>;
+namespace fs = std::filesystem;
 
 aiLogStream g_logStream{};
 bool g_logAttached = false;
+std::string g_resourcesRoot;
+
+// Dades compartides durant la importació d'un model.
+struct ImportContext
+{
+    ImportContext(const aiScene& importedScene, fs::path directory)
+        : scene(importedScene),
+          modelDirectory(std::move(directory)),
+          meshes(importedScene.mNumMeshes),
+          textures(importedScene.mNumMaterials),
+          textureTried(importedScene.mNumMaterials, false)
+    {
+    }
+
+    const aiScene& scene;
+    fs::path modelDirectory;
+    std::vector<std::shared_ptr<Mesh>> meshes;       // una conversió per aiMesh
+    std::vector<std::shared_ptr<Texture>> textures;  // una càrrega per aiMaterial
+    std::vector<bool> textureTried;
+};
 
 void AssimpLogCallback(const char* message, char* /*user*/)
 {
@@ -32,6 +57,12 @@ void AssimpLogCallback(const char* message, char* /*user*/)
         text.pop_back();
     }
     ENGINE_LOGF("[Assimp] {}", text);
+}
+
+std::string ToLowerAscii(std::string text)
+{
+    std::transform(text.begin(), text.end(), text.begin(), [](unsigned char c) { return static_cast<char>(std::tolower(c)); });
+    return text;
 }
 
 bool IsTriangleMesh(const aiMesh& mesh)
@@ -72,17 +103,118 @@ std::shared_ptr<Mesh> ConvertMesh(const aiMesh& source)
     return Mesh::Create(name, std::move(vertices), std::move(indices));
 }
 
-// Una malla d'Assimp pot ser referenciada per diversos nodes: la convertim una sola vegada.
-std::shared_ptr<Mesh> GetOrCreateMesh(const aiScene& scene, unsigned int index, MeshCache& cache)
+std::shared_ptr<Mesh> GetOrCreateMesh(ImportContext& context, unsigned int index)
 {
-    if (cache[index] == nullptr)
+    if (context.meshes[index] == nullptr)
     {
-        cache[index] = ConvertMesh(*scene.mMeshes[index]);
+        context.meshes[index] = ConvertMesh(*context.scene.mMeshes[index]);
     }
-    return cache[index];
+    return context.meshes[index];
 }
 
-void ImportNode(const aiScene& scene, const aiNode& node, GameObject& parent, MeshCache& cache)
+// Busca el fitxer pel nom dins d'una carpeta i les seves subcarpetes (sense distingir majúscules).
+fs::path SearchByName(const fs::path& root, const std::string& lowerFileName)
+{
+    std::error_code error;
+    if (root.empty() || !fs::is_directory(root, error))
+    {
+        return {};
+    }
+    for (const auto& entry : fs::recursive_directory_iterator(root, error))
+    {
+        if (entry.is_regular_file(error) && ToLowerAscii(ToUtf8(entry.path().filename())) == lowerFileName)
+        {
+            return entry.path();
+        }
+    }
+    return {};
+}
+
+// L'FBX pot guardar rutes d'un altre ordinador (amb \ o /): només ens fiem del nom del fitxer.
+fs::path FindTextureFile(const std::string& referenced, const fs::path& modelDirectory)
+{
+    const std::size_t separator = referenced.find_last_of("/\\");
+    const std::string fileName = separator == std::string::npos ? referenced : referenced.substr(separator + 1);
+    if (fileName.empty())
+    {
+        return {};
+    }
+
+    std::error_code error;
+    const fs::path next(modelDirectory / FromUtf8(fileName));
+    if (fs::is_regular_file(next, error))
+    {
+        return next;
+    }
+    const fs::path asGiven = FromUtf8(referenced);
+    if (fs::is_regular_file(asGiven, error))
+    {
+        return asGiven;
+    }
+
+    const std::string lowerName = ToLowerAscii(fileName);
+    fs::path found = SearchByName(modelDirectory, lowerName);
+    if (found.empty())
+    {
+        found = SearchByName(FromUtf8(g_resourcesRoot), lowerName);
+    }
+    return found;
+}
+
+std::shared_ptr<Texture> GetOrLoadTexture(ImportContext& context, unsigned int materialIndex)
+{
+    if (materialIndex >= context.textures.size())
+    {
+        return nullptr;
+    }
+    if (context.textureTried[materialIndex])
+    {
+        return context.textures[materialIndex];
+    }
+    context.textureTried[materialIndex] = true;
+
+    const aiMaterial* material = context.scene.mMaterials[materialIndex];
+    if (aiGetMaterialTextureCount(material, aiTextureType_DIFFUSE) == 0)
+    {
+        return nullptr;
+    }
+
+    aiString path;
+    if (aiGetMaterialTexture(material, aiTextureType_DIFFUSE, 0, &path, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr) != aiReturn_SUCCESS)
+    {
+        return nullptr;
+    }
+
+    const std::string referenced = path.C_Str();
+    if (referenced.empty() || referenced.front() == '*')
+    {
+        ENGINE_LOGF("Embedded textures are not supported ('{}')", referenced);
+        return nullptr;
+    }
+
+    const fs::path file = FindTextureFile(referenced, context.modelDirectory);
+    if (file.empty())
+    {
+        ENGINE_LOGF("Texture '{}' referenced by the model was not found", referenced);
+        return nullptr;
+    }
+
+    context.textures[materialIndex] = Texture::LoadFromFile(ToUtf8(file));
+    return context.textures[materialIndex];
+}
+
+void AttachMesh(GameObject& gameObject, unsigned int meshIndex, ImportContext& context)
+{
+    const aiMesh& source = *context.scene.mMeshes[meshIndex];
+    gameObject.AddComponent<ComponentMesh>(GetOrCreateMesh(context, meshIndex));
+
+    if (std::shared_ptr<Texture> texture = GetOrLoadTexture(context, source.mMaterialIndex))
+    {
+        gameObject.AddComponent<ComponentTexture>(std::move(texture));
+    }
+}
+
+void ImportNode(const aiNode& node, GameObject& parent, ImportContext& context)
 {
     GameObject& gameObject = parent.CreateChild(node.mName.length > 0 ? node.mName.C_Str() : "Node");
 
@@ -100,7 +232,7 @@ void ImportNode(const aiScene& scene, const aiNode& node, GameObject& parent, Me
     std::vector<unsigned int> meshIndices;
     for (unsigned int i = 0; i < node.mNumMeshes; ++i)
     {
-        if (IsTriangleMesh(*scene.mMeshes[node.mMeshes[i]]))
+        if (IsTriangleMesh(*context.scene.mMeshes[node.mMeshes[i]]))
         {
             meshIndices.push_back(node.mMeshes[i]);
         }
@@ -108,22 +240,22 @@ void ImportNode(const aiScene& scene, const aiNode& node, GameObject& parent, Me
 
     if (meshIndices.size() == 1)
     {
-        gameObject.AddComponent<ComponentMesh>(GetOrCreateMesh(scene, meshIndices.front(), cache));
+        AttachMesh(gameObject, meshIndices.front(), context);
     }
     else
     {
         // Diverses malles al mateix node: un GameObject fill per cadascuna.
         for (const unsigned int index : meshIndices)
         {
-            const aiMesh& source = *scene.mMeshes[index];
+            const aiMesh& source = *context.scene.mMeshes[index];
             GameObject& child = gameObject.CreateChild(source.mName.length > 0 ? source.mName.C_Str() : "Mesh");
-            child.AddComponent<ComponentMesh>(GetOrCreateMesh(scene, index, cache));
+            AttachMesh(child, index, context);
         }
     }
 
     for (unsigned int i = 0; i < node.mNumChildren; ++i)
     {
-        ImportNode(scene, *node.mChildren[i], gameObject, cache);
+        ImportNode(*node.mChildren[i], gameObject, context);
     }
 }
 } // namespace
@@ -151,6 +283,11 @@ void Shutdown()
     }
 }
 
+void SetResourcesRoot(const std::string& utf8Path)
+{
+    g_resourcesRoot = utf8Path;
+}
+
 GameObject* Load(Scene& scene, const std::string& utf8Path, GameObject* parent)
 {
     const auto start = std::chrono::steady_clock::now();
@@ -168,9 +305,9 @@ GameObject* Load(Scene& scene, const std::string& utf8Path, GameObject* parent)
         return nullptr;
     }
 
-    MeshCache cache(imported->mNumMeshes);
+    ImportContext context(*imported, FromUtf8(utf8Path).parent_path());
     GameObject& owner = (parent != nullptr) ? *parent : scene.GetRoot();
-    ImportNode(*imported, *imported->mRootNode, owner, cache);
+    ImportNode(*imported->mRootNode, owner, context);
 
     GameObject& root = *owner.GetChildren().back();
     root.SetName(ToUtf8(FromUtf8(utf8Path).stem()));

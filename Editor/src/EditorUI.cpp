@@ -2,11 +2,13 @@
 
 #include <Engine/Application.h>
 #include <Engine/ComponentMesh.h>
+#include <Engine/ComponentTexture.h>
 #include <Engine/ComponentTransform.h>
 #include <Engine/GameObject.h>
 #include <Engine/Log.h>
 #include <Engine/Primitives.h>
 #include <Engine/Scene.h>
+#include <Engine/Texture.h>
 
 #include <imgui.h>
 #include <imgui_impl_opengl3.h>
@@ -317,6 +319,7 @@ void EditorUI::DrawInspectorPanel(Engine::Scene& scene)
             ImGui::Separator();
             DrawTransformSection(*gameObject);
             DrawMeshSection(*gameObject);
+            DrawTextureSection(*gameObject);
         }
     }
     ImGui::End();
@@ -376,5 +379,47 @@ void EditorUI::DrawMeshSection(Engine::GameObject& gameObject)
     ImGui::Text("Triangles: %zu", mesh->GetTriangleCount());
     ImGui::Text("AABB min: %.2f, %.2f, %.2f", mesh->GetAabbMin().x, mesh->GetAabbMin().y, mesh->GetAabbMin().z);
     ImGui::Text("AABB max: %.2f, %.2f, %.2f", mesh->GetAabbMax().x, mesh->GetAabbMax().y, mesh->GetAabbMax().z);
+}
+
+void EditorUI::DrawTextureSection(Engine::GameObject& gameObject)
+{
+    Engine::ComponentTexture* textureComponent = gameObject.GetComponent<Engine::ComponentTexture>();
+    if (textureComponent == nullptr)
+    {
+        if (gameObject.GetComponent<Engine::ComponentMesh>() != nullptr && ImGui::Button("Add Texture component"))
+        {
+            gameObject.AddComponent<Engine::ComponentTexture>(std::shared_ptr<Engine::Texture>());
+        }
+        return;
+    }
+    if (!ImGui::CollapsingHeader("Texture", ImGuiTreeNodeFlags_DefaultOpen))
+    {
+        return;
+    }
+
+    bool active = textureComponent->IsActive();
+    if (ImGui::Checkbox("Active##texture", &active))
+    {
+        textureComponent->SetActive(active);
+    }
+
+    bool checkers = textureComponent->UseCheckers();
+    if (ImGui::Checkbox("Show checkers", &checkers))
+    {
+        textureComponent->SetUseCheckers(checkers);
+    }
+
+    const std::shared_ptr<Engine::Texture>& texture = textureComponent->GetTexture();
+    if (texture == nullptr)
+    {
+        ImGui::TextDisabled("No texture assigned (drop a PNG/DDS on the window)");
+        return;
+    }
+
+    ImGui::TextWrapped("Path: %s", texture->GetPath().c_str());
+    ImGui::Text("Size: %d x %d", texture->GetWidth(), texture->GetHeight());
+
+    const ImTextureID preview = static_cast<ImTextureID>(static_cast<std::uintptr_t>(texture->GetId()));
+    ImGui::Image(preview, ImVec2(128.0f, 128.0f), ImVec2(0.0f, 1.0f), ImVec2(1.0f, 0.0f));
 }
 } // namespace Editor

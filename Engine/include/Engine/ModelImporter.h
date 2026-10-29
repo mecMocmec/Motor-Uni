@@ -13,6 +13,9 @@ namespace ModelImporter
 void Init();
 void Shutdown();
 
+// Carpeta on buscar textures que no són al costat de l'FBX (per exemple Assets/Resources).
+void SetResourcesRoot(const std::string& utf8Path);
+
 // Importa el fitxer (ruta UTF-8) i crea la jerarquia de GameObjects sota 'parent'
 // (o sota l'arrel si és nullptr). Retorna el GameObject arrel del model, o nullptr si falla.
 GameObject* Load(Scene& scene, const std::string& utf8Path, GameObject* parent = nullptr);
