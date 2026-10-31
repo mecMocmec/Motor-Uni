@@ -1,9 +1,11 @@
 find_package(imgui CONFIG REQUIRED)
 
 add_executable(Editor
+    src/AboutWindow.cpp
     src/CameraInputHandler.cpp
     src/ConfigurationPanel.cpp
     src/main.cpp
+    src/ProjectInfo.cpp
     src/EditorUI.cpp
 )
 target_link_libraries(Editor PRIVATE Engine imgui::imgui)

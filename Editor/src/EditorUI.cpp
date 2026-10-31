@@ -1,5 +1,7 @@
 #include "EditorUI.h"
 
+#include "ProjectInfo.h"
+
 #include <Engine/Application.h>
 #include <Engine/CameraController.h>
 #include <Engine/ComponentMesh.h>
@@ -22,7 +24,6 @@ namespace Editor
 {
 EditorUI::EditorUI()
 {
-    // El sink es registra aviat per capturar també els logs d'inicialització del motor.
     Engine::Log::SetSink([this](std::string_view message) { m_consoleLines.emplace_back(message); });
 }
 
@@ -119,6 +120,10 @@ void EditorUI::Draw(Engine::Application& app)
     {
         m_configurationPanel.Draw(app, m_showConfiguration, m_cameraInput.IsCapturing());
     }
+    if (m_showAbout)
+    {
+        m_aboutWindow.Draw(app.GetSystemInfo(), m_showAbout);
+    }
 }
 
 void EditorUI::EndFrame(Engine::Application& app)
@@ -139,7 +144,6 @@ void EditorUI::UpdateCamera(Engine::Application& app)
 
 void EditorUI::FocusSelection(Engine::Application& app)
 {
-    // Tecla F: enfoca el GameObject seleccionat o, si no n'hi ha cap, tota l'escena.
     Engine::Scene& scene = app.GetScene();
     const Engine::GameObject* target = scene.GetSelected() != nullptr ? scene.GetSelected() : &scene.GetRoot();
 
@@ -151,7 +155,6 @@ void EditorUI::FocusSelection(Engine::Application& app)
     }
     else
     {
-        // GameObject sense geometria (per exemple un buit): s'enfoca la seva posició.
         const glm::vec3 position = glm::vec3(target->GetTransform().GetGlobalMatrix()[3]);
         app.GetEditorCamera().Frame(position, 1.0f, false, true);
     }
@@ -194,6 +197,25 @@ void EditorUI::DrawMainMenu(Engine::Application& app)
         ImGui::MenuItem("Inspector", nullptr, &m_showInspector);
         ImGui::MenuItem("Consola", nullptr, &m_showConsole);
         ImGui::MenuItem("Configuracion", nullptr, &m_showConfiguration);
+        ImGui::MenuItem("About", nullptr, &m_showAbout);
+        ImGui::EndMenu();
+    }
+    if (ImGui::BeginMenu("Help"))
+    {
+        if (ImGui::MenuItem("GitHub Documentation"))
+        {
+            ProjectInfo::OpenRepositoryPage("/docs");
+        }
+        if (ImGui::MenuItem("Report a bug"))
+        {
+            ProjectInfo::OpenRepositoryPage("/issues");
+        }
+        if (ImGui::MenuItem("Download latest"))
+        {
+            ProjectInfo::OpenRepositoryPage("/releases");
+        }
+        ImGui::Separator();
+        ImGui::MenuItem("About", nullptr, &m_showAbout);
         ImGui::EndMenu();
     }
     ImGui::EndMainMenuBar();
@@ -216,7 +238,6 @@ void EditorUI::DrawScenePanel(Engine::Application& app)
 
             const ImVec2 origin = ImGui::GetCursorScreenPos();
             const ImTextureID texture = static_cast<ImTextureID>(static_cast<std::uintptr_t>(renderer.TargetTexture()));
-            // La textura d'OpenGL té l'origen a baix: invertim les UV en vertical.
             ImGui::Image(texture, size, ImVec2(0.0f, 1.0f), ImVec2(1.0f, 0.0f));
 
             hovered = ImGui::IsItemHovered();
