@@ -27,6 +27,14 @@ struct CameraInput
     bool fast = false;     // Shift: velocitat x2
 };
 
+// Opcions de la càmera que es poden canviar des de la finestra Configuracio.
+struct CameraSettings
+{
+    float lookSensitivity = 0.0035f; // radians per píxel
+    float wheelZoomFactor = 0.15f;   // canvi de distància per volta de roda
+    float speedWheelFactor = 1.2f;   // canvi de velocitat per volta de roda mentre vola
+};
+
 // Mòdul de la càmera de l'editor, amb els controls de Unity.
 // Manté un "pivot" implícit a 'distance' davant de la càmera: és el punt al voltant del qual s'orbita.
 class CameraController
@@ -37,6 +45,8 @@ public:
     Camera& GetCamera() { return m_camera; }
     const Camera& GetCamera() const { return m_camera; }
     float GetMoveSpeed() const { return m_moveSpeed; }
+    void SetMoveSpeed(float speed) { m_moveSpeed = speed; }
+    CameraSettings& GetSettings() { return m_settings; }
 
     // Enquadra una esfera (centre, radi). 'resetOrientation' mira des d'una diagonal; si no, es manté l'orientació.
     // Amb 'animate' la càmera hi va suaument (com la tecla F d'Unity).
@@ -54,6 +64,7 @@ private:
     void UpdateClipPlanes();
 
     Camera m_camera;
+    CameraSettings m_settings;
     float m_distance = 5.0f;  // distància al pivot
     float m_moveSpeed = 3.0f; // unitats per segon en mode volar
     glm::vec3 m_velocity{0.0f};

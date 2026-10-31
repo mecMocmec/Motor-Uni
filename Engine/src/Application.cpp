@@ -92,6 +92,9 @@ bool Application::Init(const char* title, int width, int height)
     }
     SDL_GL_MakeCurrent(m_window, m_glContext);
     SDL_GL_SetSwapInterval(1);
+    int swapInterval = 0;
+    SDL_GL_GetSwapInterval(&swapInterval);
+    m_vsync = swapInterval != 0;
 
 #if ENGINE_GLAD_V2
     const int version = gladLoadGL(reinterpret_cast<GLADloadfunc>(SDL_GL_GetProcAddress));
@@ -116,6 +119,14 @@ bool Application::Init(const char* title, int width, int height)
 
     ModelImporter::Init();
     Texture::InitLoader();
+
+    m_systemInfo = QuerySystemInfo(m_window);
+    ENGINE_LOGF("CPU: {} ({} logical cores, {} MB RAM)", m_systemInfo.cpuName, m_systemInfo.cpuLogicalCores, m_systemInfo.systemRamMb);
+    ENGINE_LOGF("CPU features: {}", m_systemInfo.cpuFeatures);
+    ENGINE_LOGF("Display: {} {}x{} @ {:.0f} Hz", m_systemInfo.displayName, m_systemInfo.displayWidth, m_systemInfo.displayHeight,
+                m_systemInfo.displayRefreshRate);
+    ENGINE_LOGF("Libraries: SDL {}, DevIL {}, Assimp {}, GLM {}", m_systemInfo.sdlVersion, m_systemInfo.devilVersion, m_systemInfo.assimpVersion,
+                m_systemInfo.glmVersion);
     LoadDefaultModel();
 
     m_lastTicksNs = SDL_GetTicksNS();
@@ -169,6 +180,7 @@ void Application::Update()
     const std::uint64_t now = SDL_GetTicksNS();
     m_deltaTime = std::min(static_cast<float>(now - m_lastTicksNs) / 1.0e9f, 0.1f);
     m_lastTicksNs = now;
+    RecordFrame(m_deltaTime);
 
     m_scene.Update();
 }
@@ -268,6 +280,92 @@ void Application::ClearBackbuffer()
 void Application::Present()
 {
     SDL_GL_SwapWindow(m_window);
+    LimitFrameRate();
+}
+
+void Application::RecordFrame(float deltaTime)
+{
+    if (deltaTime <= 0.0f)
+    {
+        return;
+    }
+    const float fps = 1.0f / deltaTime;
+    m_frameHistory.fps[static_cast<std::size_t>(m_frameHistory.offset)] = fps;
+    m_frameHistory.frameMs[static_cast<std::size_t>(m_frameHistory.offset)] = deltaTime * 1000.0f;
+    m_frameHistory.offset = (m_frameHistory.offset + 1) % FrameHistory::kSamples;
+    m_frameHistory.currentFps = m_frameHistory.currentFps <= 0.0f ? fps : m_frameHistory.currentFps + (fps - m_frameHistory.currentFps) * 0.1f;
+}
+
+void Application::LimitFrameRate()
+{
+    if (m_fpsLimit <= 0)
+    {
+        return;
+    }
+    // m_lastTicksNs és l'inici d'aquest frame (es marca a Update).
+    const std::uint64_t targetNs = 1'000'000'000ull / static_cast<std::uint64_t>(m_fpsLimit);
+    const std::uint64_t elapsedNs = SDL_GetTicksNS() - m_lastTicksNs;
+    if (elapsedNs < targetNs)
+    {
+        SDL_DelayNS(targetNs - elapsedNs);
+    }
+}
+
+void Application::GetWindowSize(int& width, int& height) const
+{
+    SDL_GetWindowSizeInPixels(m_window, &width, &height);
+}
+
+void Application::SetWindowSize(int width, int height)
+{
+    SDL_SetWindowSize(m_window, std::max(width, 320), std::max(height, 240));
+}
+
+bool Application::IsFullscreen() const
+{
+    return (SDL_GetWindowFlags(m_window) & SDL_WINDOW_FULLSCREEN) != 0;
+}
+
+void Application::SetFullscreen(bool fullscreen)
+{
+    SDL_SetWindowFullscreen(m_window, fullscreen);
+}
+
+bool Application::IsResizable() const
+{
+    return (SDL_GetWindowFlags(m_window) & SDL_WINDOW_RESIZABLE) != 0;
+}
+
+void Application::SetResizable(bool resizable)
+{
+    SDL_SetWindowResizable(m_window, resizable);
+}
+
+bool Application::IsBordered() const
+{
+    return (SDL_GetWindowFlags(m_window) & SDL_WINDOW_BORDERLESS) == 0;
+}
+
+void Application::SetBordered(bool bordered)
+{
+    SDL_SetWindowBordered(m_window, bordered);
+}
+
+void Application::SetVSync(bool vsync)
+{
+    if (SDL_GL_SetSwapInterval(vsync ? 1 : 0))
+    {
+        m_vsync = vsync;
+    }
+    else
+    {
+        ENGINE_LOGF("Could not change VSync: {}", SDL_GetError());
+    }
+}
+
+MemoryInfo Application::QueryMemory() const
+{
+    return QueryMemoryInfo();
 }
 
 float Application::TimeSeconds() const

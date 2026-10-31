@@ -1,6 +1,7 @@
 #include "Engine/Mesh.h"
 
 #include "Engine/Log.h"
+#include "Engine/ResourceStats.h"
 #include "GLInclude.h"
 
 #include <algorithm>
@@ -32,6 +33,7 @@ Mesh::Mesh(std::string name, std::vector<Vertex> vertices, std::vector<std::uint
 
 Mesh::~Mesh()
 {
+    ResourceStats::OnMeshDestroyed(m_vertices.size() * sizeof(Vertex) + m_indices.size() * sizeof(std::uint32_t));
     glDeleteBuffers(1, &m_vbo);
     glDeleteBuffers(1, &m_ebo);
     glDeleteVertexArrays(1, &m_vao);
@@ -59,6 +61,7 @@ void Mesh::Upload()
 
     glBindVertexArray(0);
 
+    ResourceStats::OnMeshCreated(m_vertices.size() * sizeof(Vertex) + m_indices.size() * sizeof(std::uint32_t));
     ENGINE_LOGF("Mesh '{}' uploaded: {} vertices, {} triangles", m_name, m_vertices.size(), GetTriangleCount());
 }
 

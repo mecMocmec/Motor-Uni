@@ -184,11 +184,28 @@ void Renderer::RenderScene(const Scene& scene, const Camera& camera)
 
     glBindFramebuffer(GL_FRAMEBUFFER, m_fbo);
     glViewport(0, 0, m_width, m_height);
-    glClearColor(0.12f, 0.12f, 0.14f, 1.0f);
+    glClearColor(m_settings.clearColor.r, m_settings.clearColor.g, m_settings.clearColor.b, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-    glEnable(GL_DEPTH_TEST);
-    glEnable(GL_CULL_FACE);
+    // Opcions de la finestra Configuracio
+    const auto setCapability = [](GLenum capability, bool enabled)
+    {
+        if (enabled)
+        {
+            glEnable(capability);
+        }
+        else
+        {
+            glDisable(capability);
+        }
+    };
+    setCapability(GL_DEPTH_TEST, m_settings.depthTest);
+    setCapability(GL_CULL_FACE, m_settings.cullFace);
+    setCapability(GL_BLEND, m_settings.blend);
+    glCullFace(m_settings.cullBackFaces ? GL_BACK : GL_FRONT);
+    glFrontFace(m_settings.frontFaceCounterClockwise ? GL_CCW : GL_CW);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+    glPolygonMode(GL_FRONT_AND_BACK, m_settings.wireframe ? GL_LINE : GL_FILL);
 
     const float aspect = static_cast<float>(m_width) / static_cast<float>(m_height);
     const glm::mat4 view = camera.ViewMatrix();
@@ -200,6 +217,9 @@ void Renderer::RenderScene(const Scene& scene, const Camera& camera)
     glUniform1i(m_locSampler, 0); // unitat de textura 0
 
     DrawGameObject(scene.GetRoot());
+
+    glPolygonMode(GL_FRONT_AND_BACK, GL_FILL); // el wireframe només afecta l'escena, no l'editor
+    glDisable(GL_BLEND);
 
     glUseProgram(0);
     glBindFramebuffer(GL_FRAMEBUFFER, 0);

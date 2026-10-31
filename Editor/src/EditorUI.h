@@ -1,6 +1,7 @@
 #pragma once
 
 #include "CameraInputHandler.h"
+#include "ConfigurationPanel.h"
 
 #include <SDL3/SDL.h>
 
@@ -46,9 +47,11 @@ private:
 
     std::vector<std::string> m_consoleLines;
     CameraInputHandler m_cameraInput;
+    ConfigurationPanel m_configurationPanel;
     SDL_Window* m_window = nullptr;
     bool m_showScene = true;
     bool m_showConsole = true;
+    bool m_showConfiguration = true;
     bool m_showHierarchy = true;
     bool m_showInspector = true;
     bool m_initialised = false;

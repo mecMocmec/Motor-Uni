@@ -7,12 +7,9 @@ namespace Engine
 {
 namespace
 {
-constexpr float kLookSensitivity = 0.0035f; // radians per píxel
 constexpr float kMinDistance = 0.01f;
 constexpr float kMaxDistance = 1.0e6f;
-constexpr float kWheelZoomFactor = 0.15f;   // canvi de distància per volta de roda
 constexpr float kDollyDragFactor = 0.01f;   // Alt + botó dret
-constexpr float kSpeedWheelFactor = 1.2f;   // canvi de velocitat per volta de roda mentre vola
 constexpr float kMinSpeed = 0.01f;
 constexpr float kMaxSpeed = 10000.0f;
 constexpr float kVelocitySmoothing = 12.0f; // com més alt, més sec
@@ -69,7 +66,7 @@ void CameraController::Update(const CameraInput& input, float deltaTime)
         if (hasWheel)
         {
             // Com a Unity: la roda mentre vols canvia la velocitat de moviment.
-            m_moveSpeed = std::clamp(m_moveSpeed * std::pow(kSpeedWheelFactor, input.wheel), kMinSpeed, kMaxSpeed);
+            m_moveSpeed = std::clamp(m_moveSpeed * std::pow(m_settings.speedWheelFactor, input.wheel), kMinSpeed, kMaxSpeed);
         }
     }
     else
@@ -77,7 +74,7 @@ void CameraController::Update(const CameraInput& input, float deltaTime)
         m_velocity = glm::vec3(0.0f);
         if (hasWheel)
         {
-            ZoomBy(std::exp(-input.wheel * kWheelZoomFactor));
+            ZoomBy(std::exp(-input.wheel * m_settings.wheelZoomFactor));
         }
     }
 
@@ -104,8 +101,8 @@ void CameraController::Update(const CameraInput& input, float deltaTime)
 void CameraController::Fly(const CameraInput& input, float deltaTime)
 {
     // Free look: el pivot "viatja" amb la càmera perquè es calcula a partir de la posició.
-    m_camera.SetYawPitch(m_camera.GetYaw() + input.mouseDelta.x * kLookSensitivity,
-                         m_camera.GetPitch() - input.mouseDelta.y * kLookSensitivity);
+    m_camera.SetYawPitch(m_camera.GetYaw() + input.mouseDelta.x * m_settings.lookSensitivity,
+                         m_camera.GetPitch() - input.mouseDelta.y * m_settings.lookSensitivity);
 
     glm::vec3 direction(0.0f);
     if (input.moveForward)
@@ -148,8 +145,8 @@ void CameraController::Fly(const CameraInput& input, float deltaTime)
 void CameraController::Orbit(const CameraInput& input)
 {
     const glm::vec3 pivot = Pivot();
-    m_camera.SetYawPitch(m_camera.GetYaw() + input.mouseDelta.x * kLookSensitivity,
-                         m_camera.GetPitch() - input.mouseDelta.y * kLookSensitivity);
+    m_camera.SetYawPitch(m_camera.GetYaw() + input.mouseDelta.x * m_settings.lookSensitivity,
+                         m_camera.GetPitch() - input.mouseDelta.y * m_settings.lookSensitivity);
     m_camera.SetPosition(pivot - m_camera.Forward() * m_distance);
 }
 

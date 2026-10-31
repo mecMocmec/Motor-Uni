@@ -15,7 +15,9 @@ add_library(Engine STATIC
     src/ModelImporter.cpp
     src/Primitives.cpp
     src/Renderer.cpp
+    src/ResourceStats.cpp
     src/Scene.cpp
+    src/SystemInfo.cpp
     src/Texture.cpp
 )
 target_include_directories(Engine PUBLIC include)
@@ -24,3 +26,8 @@ target_link_libraries(Engine
     PRIVATE assimp::assimp ${IL_LIBRARIES} ${ILU_LIBRARIES} ${ILUT_LIBRARIES}
 )
 target_include_directories(Engine PRIVATE ${IL_INCLUDE_DIR})
+
+# Memòria del procés (psapi) i nom de la CPU (registre) a Windows
+if(WIN32)
+    target_link_libraries(Engine PRIVATE psapi advapi32)
+endif()

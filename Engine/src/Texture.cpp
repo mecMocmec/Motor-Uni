@@ -1,6 +1,7 @@
 #include "Engine/Texture.h"
 
 #include "Engine/Log.h"
+#include "Engine/ResourceStats.h"
 #include "GLInclude.h"
 #include "PathUtil.h"
 
@@ -13,10 +14,23 @@
 #include <iterator>
 #include <vector>
 
+#ifndef GL_TEXTURE_MAX_ANISOTROPY
+    #define GL_TEXTURE_MAX_ANISOTROPY 0x84FE
+#endif
+#ifndef GL_MAX_TEXTURE_MAX_ANISOTROPY
+    #define GL_MAX_TEXTURE_MAX_ANISOTROPY 0x84FF
+#endif
+
 namespace Engine
 {
 namespace
 {
+std::vector<const Texture*>& Registry()
+{
+    static std::vector<const Texture*> textures;
+    return textures;
+}
+
 std::string LowerExtension(const std::string& path)
 {
     const std::size_t dot = path.find_last_of('.');
@@ -54,6 +68,47 @@ ILenum DevilTypeFromExtension(const std::string& extension)
     return IL_TYPE_UNKNOWN;
 }
 
+GLint ToGl(TextureWrap wrap)
+{
+    switch (wrap)
+    {
+    case TextureWrap::MirroredRepeat:
+        return GL_MIRRORED_REPEAT;
+    case TextureWrap::ClampToEdge:
+        return GL_CLAMP_TO_EDGE;
+    case TextureWrap::ClampToBorder:
+        return GL_CLAMP_TO_BORDER;
+    case TextureWrap::Repeat:
+    default:
+        return GL_REPEAT;
+    }
+}
+
+GLint ToGl(TextureMinFilter filter)
+{
+    switch (filter)
+    {
+    case TextureMinFilter::Nearest:
+        return GL_NEAREST;
+    case TextureMinFilter::Linear:
+        return GL_LINEAR;
+    case TextureMinFilter::NearestMipmapNearest:
+        return GL_NEAREST_MIPMAP_NEAREST;
+    case TextureMinFilter::LinearMipmapNearest:
+        return GL_LINEAR_MIPMAP_NEAREST;
+    case TextureMinFilter::NearestMipmapLinear:
+        return GL_NEAREST_MIPMAP_LINEAR;
+    case TextureMinFilter::LinearMipmapLinear:
+    default:
+        return GL_LINEAR_MIPMAP_LINEAR;
+    }
+}
+
+GLint ToGl(TextureMagFilter filter)
+{
+    return filter == TextureMagFilter::Nearest ? GL_NEAREST : GL_LINEAR;
+}
+
 std::uint32_t UploadRgba(const unsigned char* pixels, int width, int height, bool pixelated)
 {
     GLuint id = 0;
@@ -88,6 +143,66 @@ void Texture::InitLoader()
 void Texture::ShutdownLoader()
 {
     ilShutDown();
+}
+
+TextureSettings& Texture::GetSettings()
+{
+    static TextureSettings settings;
+    return settings;
+}
+
+void Texture::ApplySettings()
+{
+    for (const Texture* texture : Registry())
+    {
+        texture->ApplyParameters();
+    }
+}
+
+float Texture::MaxAnisotropy()
+{
+    static const float value = []
+    {
+        while (glGetError() != GL_NO_ERROR)
+        {
+        }
+        GLfloat maxValue = 1.0f;
+        glGetFloatv(GL_MAX_TEXTURE_MAX_ANISOTROPY, &maxValue);
+        return (glGetError() == GL_NO_ERROR && maxValue >= 1.0f) ? maxValue : 1.0f;
+    }();
+    return value;
+}
+
+const std::vector<const Texture*>& Texture::GetAll()
+{
+    return Registry();
+}
+
+void Texture::Register()
+{
+    Registry().push_back(this);
+    ResourceStats::OnTextureCreated(m_gpuBytes);
+}
+
+void Texture::ApplyParameters() const
+{
+    if (m_pixelated)
+    {
+        return; // la textura de quadrats sempre es veu a píxels
+    }
+
+    const TextureSettings& settings = GetSettings();
+    glBindTexture(GL_TEXTURE_2D, m_id);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, ToGl(settings.wrap));
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, ToGl(settings.wrap));
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, ToGl(settings.minFilter));
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, ToGl(settings.magFilter));
+
+    if (MaxAnisotropy() > 1.0f)
+    {
+        glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAX_ANISOTROPY, std::clamp(settings.anisotropy, 1.0f, MaxAnisotropy()));
+    }
+    glBindTexture(GL_TEXTURE_2D, 0);
 }
 
 std::shared_ptr<Texture> Texture::LoadFromFile(const std::string& utf8Path)
@@ -128,8 +243,12 @@ std::shared_ptr<Texture> Texture::LoadFromFile(const std::string& utf8Path)
     texture->m_width = width;
     texture->m_height = height;
     texture->m_path = utf8Path;
+    texture->m_gpuBytes = static_cast<std::uint64_t>(width) * static_cast<std::uint64_t>(height) * 4ull * 4ull / 3ull; // RGBA8 + mipmaps
     texture->m_id = UploadRgba(ilGetData(), width, height, false);
     ilDeleteImages(1, &image);
+
+    texture->Register();
+    texture->ApplyParameters(); // fa servir les opcions globals actuals
 
     const auto elapsed = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::steady_clock::now() - start);
     ENGINE_LOGF("Texture '{}' loaded ({}x{}) in {} ms", utf8Path, width, height, elapsed.count());
@@ -157,12 +276,17 @@ std::shared_ptr<Texture> Texture::CreateCheckers()
     texture->m_width = kSize;
     texture->m_height = kSize;
     texture->m_path = "(procedural checkers)";
+    texture->m_pixelated = true;
+    texture->m_gpuBytes = static_cast<std::uint64_t>(kSize) * kSize * 4ull;
     texture->m_id = UploadRgba(pixels.data(), kSize, kSize, true);
+    texture->Register();
     return texture;
 }
 
 Texture::~Texture()
 {
+    std::erase(Registry(), this);
+    ResourceStats::OnTextureDestroyed(m_gpuBytes);
     glDeleteTextures(1, &m_id);
 }
 } // namespace Engine

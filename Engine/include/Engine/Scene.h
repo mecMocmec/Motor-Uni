@@ -2,11 +2,20 @@
 
 #include "Engine/GameObject.h"
 
+#include <cstdint>
 #include <memory>
 #include <string>
 
 namespace Engine
 {
+struct SceneStats
+{
+    int gameObjects = 0;
+    int meshComponents = 0;
+    std::uint64_t vertices = 0;
+    std::uint64_t triangles = 0;
+};
+
 // Conté només el node arrel; la resta de GameObjects pengen d'ell com un arbre.
 class Scene
 {
@@ -21,6 +30,7 @@ public:
     void Clear();
 
     void Update();
+    SceneStats ComputeStats() const;
 
     GameObject* GetSelected() const { return m_selected; }
     void Select(GameObject* gameObject) { m_selected = gameObject; }

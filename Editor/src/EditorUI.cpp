@@ -115,6 +115,10 @@ void EditorUI::Draw(Engine::Application& app)
     {
         DrawConsolePanel();
     }
+    if (m_showConfiguration)
+    {
+        m_configurationPanel.Draw(app, m_showConfiguration, m_cameraInput.IsCapturing());
+    }
 }
 
 void EditorUI::EndFrame(Engine::Application& app)
@@ -189,6 +193,7 @@ void EditorUI::DrawMainMenu(Engine::Application& app)
         ImGui::MenuItem("Jerarquia", nullptr, &m_showHierarchy);
         ImGui::MenuItem("Inspector", nullptr, &m_showInspector);
         ImGui::MenuItem("Consola", nullptr, &m_showConsole);
+        ImGui::MenuItem("Configuracion", nullptr, &m_showConfiguration);
         ImGui::EndMenu();
     }
     ImGui::EndMainMenuBar();
