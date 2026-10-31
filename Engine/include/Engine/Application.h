@@ -1,10 +1,12 @@
 #pragma once
 
+#include "Engine/CameraController.h"
 #include "Engine/Renderer.h"
 #include "Engine/Scene.h"
 
 #include <SDL3/SDL.h>
 
+#include <cstdint>
 #include <functional>
 #include <string>
 
@@ -30,11 +32,13 @@ public:
     void RequestQuit() { m_running = false; }
 
     float TimeSeconds() const;
+    float DeltaTime() const { return m_deltaTime; } // segons del darrer frame
 
     SDL_Window* GetWindow() const { return m_window; }
     SDL_GLContext GetGLContext() const { return m_glContext; }
     Renderer& GetRenderer() { return m_renderer; }
     Scene& GetScene() { return m_scene; }
+    CameraController& GetEditorCamera() { return m_editorCamera; }
 
 private:
     void LoadDefaultModel();
@@ -44,6 +48,9 @@ private:
     SDL_GLContext m_glContext = nullptr;
     Renderer m_renderer;
     Scene m_scene;
+    CameraController m_editorCamera;
+    std::uint64_t m_lastTicksNs = 0;
+    float m_deltaTime = 0.016f;
     bool m_running = false;
 };
 } // namespace Engine

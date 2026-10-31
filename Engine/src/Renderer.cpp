@@ -1,5 +1,6 @@
 #include "Engine/Renderer.h"
 
+#include "Engine/Camera.h"
 #include "Engine/ComponentMesh.h"
 #include "Engine/ComponentTexture.h"
 #include "Engine/ComponentTransform.h"
@@ -19,8 +20,6 @@ namespace Engine
 {
 namespace
 {
-constexpr float kFovDegrees = 60.0f;
-
 constexpr const char* kVertexShader = R"(#version 460 core
 layout (location = 0) in vec3 position;
 layout (location = 1) in vec3 normal;
@@ -176,7 +175,7 @@ void Renderer::ResizeTarget(int width, int height)
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
 }
 
-void Renderer::RenderScene(const Scene& scene)
+void Renderer::RenderScene(const Scene& scene, const Camera& camera)
 {
     if (m_fbo == 0)
     {
@@ -191,10 +190,9 @@ void Renderer::RenderScene(const Scene& scene)
     glEnable(GL_DEPTH_TEST);
     glEnable(GL_CULL_FACE);
 
-    // Càmera fixa de moment; la càmera estil Unity arriba en un pas posterior.
     const float aspect = static_cast<float>(m_width) / static_cast<float>(m_height);
-    const glm::mat4 view = glm::lookAt(m_cameraPosition, m_cameraTarget, glm::vec3(0.0f, 1.0f, 0.0f));
-    const glm::mat4 projection = glm::perspective(glm::radians(kFovDegrees), aspect, m_near, m_far);
+    const glm::mat4 view = camera.ViewMatrix();
+    const glm::mat4 projection = camera.ProjectionMatrix(aspect);
 
     glUseProgram(m_program);
     glUniformMatrix4fv(m_locView, 1, GL_FALSE, glm::value_ptr(view));
@@ -205,18 +203,6 @@ void Renderer::RenderScene(const Scene& scene)
 
     glUseProgram(0);
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
-}
-
-void Renderer::FocusOn(const glm::vec3& center, float radius)
-{
-    radius = std::max(radius, 0.001f);
-    const float distance = radius / std::sin(glm::radians(kFovDegrees) * 0.5f) * 1.2f;
-    const glm::vec3 direction = glm::normalize(glm::vec3(0.6f, 0.45f, 0.8f));
-
-    m_cameraTarget = center;
-    m_cameraPosition = center + direction * distance;
-    m_near = std::max(distance * 0.01f, 0.001f);
-    m_far = distance * 100.0f + radius * 10.0f;
 }
 
 void Renderer::DrawGameObject(const GameObject& gameObject) const

@@ -118,6 +118,7 @@ bool Application::Init(const char* title, int width, int height)
     Texture::InitLoader();
     LoadDefaultModel();
 
+    m_lastTicksNs = SDL_GetTicksNS();
     m_running = true;
     return true;
 }
@@ -165,6 +166,10 @@ void Application::PumpEvents(const std::function<void(const SDL_Event&)>& onEven
 
 void Application::Update()
 {
+    const std::uint64_t now = SDL_GetTicksNS();
+    m_deltaTime = std::min(static_cast<float>(now - m_lastTicksNs) / 1.0e9f, 0.1f);
+    m_lastTicksNs = now;
+
     m_scene.Update();
 }
 
@@ -185,7 +190,7 @@ bool Application::LoadModel(const std::string& utf8Path)
     {
         const glm::vec3 center = (boundsMin + boundsMax) * 0.5f;
         const float radius = glm::length(boundsMax - boundsMin) * 0.5f;
-        m_renderer.FocusOn(center, radius);
+        m_editorCamera.Frame(center, radius, true, false);
     }
     return true;
 }

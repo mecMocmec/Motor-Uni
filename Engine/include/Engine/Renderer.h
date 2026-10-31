@@ -9,6 +9,7 @@
 
 namespace Engine
 {
+class Camera;
 class GameObject;
 class Scene;
 
@@ -20,10 +21,7 @@ public:
     void Shutdown();
 
     void ResizeTarget(int width, int height);
-    void RenderScene(const Scene& scene);
-
-    // Col·loca la càmera perquè una esfera (centre, radi) quedi enquadrada.
-    void FocusOn(const glm::vec3& center, float radius);
+    void RenderScene(const Scene& scene, const Camera& camera);
 
     std::uint32_t TargetTexture() const { return m_colorTex; }
     int TargetWidth() const { return m_width; }
@@ -40,11 +38,6 @@ private:
     std::int32_t m_locSampler = -1;
     std::int32_t m_locUseTexture = -1;
     std::shared_ptr<Texture> m_checkers;
-
-    glm::vec3 m_cameraPosition{2.5f, 2.0f, 3.5f};
-    glm::vec3 m_cameraTarget{0.0f};
-    float m_near = 0.1f;
-    float m_far = 100.0f;
 
     std::uint32_t m_fbo = 0;
     std::uint32_t m_colorTex = 0;

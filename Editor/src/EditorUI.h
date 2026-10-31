@@ -1,5 +1,7 @@
 #pragma once
 
+#include "CameraInputHandler.h"
+
 #include <SDL3/SDL.h>
 
 #include <string>
@@ -29,6 +31,8 @@ public:
     void EndFrame(Engine::Application& app);
 
 private:
+    void UpdateCamera(Engine::Application& app);
+    void FocusSelection(Engine::Application& app);
     void DrawMainMenu(Engine::Application& app);
     void DrawScenePanel(Engine::Application& app);
     void DrawConsolePanel();
@@ -41,6 +45,8 @@ private:
     void DrawTextureSection(Engine::GameObject& gameObject);
 
     std::vector<std::string> m_consoleLines;
+    CameraInputHandler m_cameraInput;
+    SDL_Window* m_window = nullptr;
     bool m_showScene = true;
     bool m_showConsole = true;
     bool m_showHierarchy = true;

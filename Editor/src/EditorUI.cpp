@@ -1,6 +1,7 @@
 #include "EditorUI.h"
 
 #include <Engine/Application.h>
+#include <Engine/CameraController.h>
 #include <Engine/ComponentMesh.h>
 #include <Engine/ComponentTexture.h>
 #include <Engine/ComponentTransform.h>
@@ -36,7 +37,8 @@ bool EditorUI::Init(Engine::Application& app)
     ImGui::CreateContext();
 
     ImGuiIO& io = ImGui::GetIO();
-    io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;
+    io.ConfigWindowsMoveFromTitleBarOnly = true;
+    m_window = app.GetWindow();
     io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;
 
     ImGui::StyleColorsDark();
@@ -63,6 +65,7 @@ void EditorUI::Shutdown()
     {
         return;
     }
+    m_cameraInput.ReleaseCapture(m_window);
     ImGui_ImplOpenGL3_Shutdown();
     ImGui_ImplSDL3_Shutdown();
     ImGui::DestroyContext();
@@ -71,7 +74,11 @@ void EditorUI::Shutdown()
 
 void EditorUI::ProcessEvent(const SDL_Event& event)
 {
-    ImGui_ImplSDL3_ProcessEvent(&event);
+    const bool consumed = m_cameraInput.ProcessEvent(event, m_window, ImGui::GetIO().WantTextInput);
+    if (!consumed)
+    {
+        ImGui_ImplSDL3_ProcessEvent(&event);
+    }
 }
 
 void EditorUI::BeginFrame()
@@ -83,12 +90,18 @@ void EditorUI::BeginFrame()
 
 void EditorUI::Draw(Engine::Application& app)
 {
+    UpdateCamera(app);
+
     DrawMainMenu(app);
     ImGui::DockSpaceOverViewport(0, ImGui::GetMainViewport());
 
     if (m_showScene)
     {
         DrawScenePanel(app);
+    }
+    else
+    {
+        m_cameraInput.SetSceneState(false, 1.0f);
     }
     if (m_showHierarchy)
     {
@@ -109,6 +122,35 @@ void EditorUI::EndFrame(Engine::Application& app)
     ImGui::Render();
     app.ClearBackbuffer();
     ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+}
+
+void EditorUI::UpdateCamera(Engine::Application& app)
+{
+    if (m_cameraInput.ConsumeFocusRequest())
+    {
+        FocusSelection(app);
+    }
+    app.GetEditorCamera().Update(m_cameraInput.BuildInput(), app.DeltaTime());
+}
+
+void EditorUI::FocusSelection(Engine::Application& app)
+{
+    // Tecla F: enfoca el GameObject seleccionat o, si no n'hi ha cap, tota l'escena.
+    Engine::Scene& scene = app.GetScene();
+    const Engine::GameObject* target = scene.GetSelected() != nullptr ? scene.GetSelected() : &scene.GetRoot();
+
+    glm::vec3 boundsMin;
+    glm::vec3 boundsMax;
+    if (target->ComputeWorldAabb(boundsMin, boundsMax))
+    {
+        app.GetEditorCamera().Frame((boundsMin + boundsMax) * 0.5f, glm::length(boundsMax - boundsMin) * 0.5f, false, true);
+    }
+    else
+    {
+        // GameObject sense geometria (per exemple un buit): s'enfoca la seva posició.
+        const glm::vec3 position = glm::vec3(target->GetTransform().GetGlobalMatrix()[3]);
+        app.GetEditorCamera().Frame(position, 1.0f, false, true);
+    }
 }
 
 void EditorUI::DrawMainMenu(Engine::Application& app)
@@ -154,6 +196,9 @@ void EditorUI::DrawMainMenu(Engine::Application& app)
 
 void EditorUI::DrawScenePanel(Engine::Application& app)
 {
+    bool hovered = false;
+    float viewportHeight = 1.0f;
+
     ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0.0f, 0.0f));
     if (ImGui::Begin("Escena", &m_showScene))
     {
@@ -162,15 +207,28 @@ void EditorUI::DrawScenePanel(Engine::Application& app)
         {
             Engine::Renderer& renderer = app.GetRenderer();
             renderer.ResizeTarget(static_cast<int>(size.x), static_cast<int>(size.y));
-            renderer.RenderScene(app.GetScene());
+            renderer.RenderScene(app.GetScene(), app.GetEditorCamera().GetCamera());
 
+            const ImVec2 origin = ImGui::GetCursorScreenPos();
             const ImTextureID texture = static_cast<ImTextureID>(static_cast<std::uintptr_t>(renderer.TargetTexture()));
             // La textura d'OpenGL té l'origen a baix: invertim les UV en vertical.
             ImGui::Image(texture, size, ImVec2(0.0f, 1.0f), ImVec2(1.0f, 0.0f));
+
+            hovered = ImGui::IsItemHovered();
+            viewportHeight = size.y;
+
+            if (m_cameraInput.IsCapturing())
+            {
+                char text[64];
+                std::snprintf(text, sizeof(text), "Camera speed: %.2f", app.GetEditorCamera().GetMoveSpeed());
+                ImGui::GetWindowDrawList()->AddText(ImVec2(origin.x + 8.0f, origin.y + 8.0f), IM_COL32(255, 255, 255, 220), text);
+            }
         }
     }
     ImGui::End();
     ImGui::PopStyleVar();
+
+    m_cameraInput.SetSceneState(hovered, viewportHeight);
 }
 
 void EditorUI::DrawConsolePanel()

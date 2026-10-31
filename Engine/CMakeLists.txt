@@ -6,6 +6,8 @@ find_package(DevIL REQUIRED)
 
 add_library(Engine STATIC
     src/Application.cpp
+    src/Camera.cpp
+    src/CameraController.cpp
     src/ComponentTransform.cpp
     src/GameObject.cpp
     src/Log.cpp

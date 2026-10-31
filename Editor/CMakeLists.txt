@@ -1,6 +1,7 @@
 find_package(imgui CONFIG REQUIRED)
 
 add_executable(Editor
+    src/CameraInputHandler.cpp
     src/main.cpp
     src/EditorUI.cpp
 )
