@@ -22,6 +22,16 @@
 
 namespace Editor
 {
+namespace
+{
+void CreatePrimitive(Engine::Scene& scene, const char* name, std::shared_ptr<Engine::Mesh> mesh)
+{
+    Engine::GameObject& gameObject = scene.CreateGameObject(name);
+    gameObject.AddComponent<Engine::ComponentMesh>(std::move(mesh));
+    scene.Select(&gameObject);
+}
+} // namespace
+
 EditorUI::EditorUI()
 {
     Engine::Log::SetSink([this](std::string_view message) { m_consoleLines.emplace_back(message); });
@@ -182,11 +192,22 @@ void EditorUI::DrawMainMenu(Engine::Application& app)
         {
             scene.Select(&scene.CreateGameObject("GameObject"));
         }
+        ImGui::Separator();
         if (ImGui::MenuItem("Create Cube"))
         {
-            Engine::GameObject& cube = scene.CreateGameObject("Cube");
-            cube.AddComponent<Engine::ComponentMesh>(Engine::Primitives::CreateCube());
-            scene.Select(&cube);
+            CreatePrimitive(scene, "Cube", Engine::Primitives::CreateCube());
+        }
+        if (ImGui::MenuItem("Create Sphere"))
+        {
+            CreatePrimitive(scene, "Sphere", Engine::Primitives::CreateSphere());
+        }
+        if (ImGui::MenuItem("Create Pyramid"))
+        {
+            CreatePrimitive(scene, "Pyramid", Engine::Primitives::CreatePyramid());
+        }
+        if (ImGui::MenuItem("Create Cylinder"))
+        {
+            CreatePrimitive(scene, "Cylinder", Engine::Primitives::CreateCylinder());
         }
         ImGui::EndMenu();
     }
@@ -202,15 +223,15 @@ void EditorUI::DrawMainMenu(Engine::Application& app)
     }
     if (ImGui::BeginMenu("Help"))
     {
-        if (ImGui::MenuItem("GitHub Documentation"))
+        if (ImGui::MenuItem("Documentacion del GitHub"))
         {
             ProjectInfo::OpenRepositoryPage("/docs");
         }
-        if (ImGui::MenuItem("Report a bug"))
+        if (ImGui::MenuItem("Reportar un bug"))
         {
             ProjectInfo::OpenRepositoryPage("/issues");
         }
-        if (ImGui::MenuItem("Download latest"))
+        if (ImGui::MenuItem("Descargar ultimo"))
         {
             ProjectInfo::OpenRepositoryPage("/releases");
         }
@@ -238,6 +259,7 @@ void EditorUI::DrawScenePanel(Engine::Application& app)
 
             const ImVec2 origin = ImGui::GetCursorScreenPos();
             const ImTextureID texture = static_cast<ImTextureID>(static_cast<std::uintptr_t>(renderer.TargetTexture()));
+
             ImGui::Image(texture, size, ImVec2(0.0f, 1.0f), ImVec2(1.0f, 0.0f));
 
             hovered = ImGui::IsItemHovered();
@@ -287,7 +309,6 @@ void EditorUI::DrawHierarchyPanel(Engine::Scene& scene)
 {
     if (ImGui::Begin("Jerarquia", &m_showHierarchy))
     {
-        // Les modificacions de l'arbre s'ajornen fins acabar de recórrer-lo.
         Engine::GameObject* toDelete = nullptr;
         Engine::GameObject* addChildTo = nullptr;
 
@@ -463,6 +484,18 @@ void EditorUI::DrawMeshSection(Engine::GameObject& gameObject)
     ImGui::Text("Triangles: %zu", mesh->GetTriangleCount());
     ImGui::Text("AABB min: %.2f, %.2f, %.2f", mesh->GetAabbMin().x, mesh->GetAabbMin().y, mesh->GetAabbMin().z);
     ImGui::Text("AABB max: %.2f, %.2f, %.2f", mesh->GetAabbMax().x, mesh->GetAabbMax().y, mesh->GetAabbMax().z);
+
+    ImGui::Separator();
+    bool showTriangleNormals = meshComponent->ShowTriangleNormals();
+    if (ImGui::Checkbox("Show normals per triangle", &showTriangleNormals))
+    {
+        meshComponent->SetShowTriangleNormals(showTriangleNormals);
+    }
+    bool showVertexNormals = meshComponent->ShowVertexNormals();
+    if (ImGui::Checkbox("Show normals per vertex", &showVertexNormals))
+    {
+        meshComponent->SetShowVertexNormals(showVertexNormals);
+    }
 }
 
 void EditorUI::DrawTextureSection(Engine::GameObject& gameObject)
@@ -506,4 +539,4 @@ void EditorUI::DrawTextureSection(Engine::GameObject& gameObject)
     const ImTextureID preview = static_cast<ImTextureID>(static_cast<std::uintptr_t>(texture->GetId()));
     ImGui::Image(preview, ImVec2(128.0f, 128.0f), ImVec2(0.0f, 1.0f), ImVec2(1.0f, 0.0f));
 }
-} // namespace Editor
+}

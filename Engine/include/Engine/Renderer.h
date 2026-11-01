@@ -52,6 +52,8 @@ private:
     std::int32_t m_locProjection = -1;
     std::int32_t m_locSampler = -1;
     std::int32_t m_locUseTexture = -1;
+    std::int32_t m_locUseFlatColor = -1;
+    std::int32_t m_locFlatColor = -1;
     std::shared_ptr<Texture> m_checkers;
     RendererSettings m_settings;
 

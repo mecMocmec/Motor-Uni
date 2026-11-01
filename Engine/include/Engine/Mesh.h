@@ -17,8 +17,6 @@ struct Vertex
     glm::vec2 uv;
 };
 
-// Malla: dades a CPU + buffers a la VRAM. Es comparteix amb shared_ptr.
-// Ha de destruir-se mentre el context d'OpenGL encara existeix.
 class Mesh
 {
 public:
@@ -29,13 +27,14 @@ public:
     Mesh& operator=(const Mesh&) = delete;
 
     void Draw() const;
+    void DrawTriangleNormals() const;
+    void DrawVertexNormals() const;
 
     const std::string& GetName() const { return m_name; }
     const std::vector<Vertex>& GetVertices() const { return m_vertices; }
     const std::vector<std::uint32_t>& GetIndices() const { return m_indices; }
     std::size_t GetTriangleCount() const { return m_indices.size() / 3; }
 
-    // Caixa envolupant (AABB) en espai local.
     const glm::vec3& GetAabbMin() const { return m_aabbMin; }
     const glm::vec3& GetAabbMax() const { return m_aabbMax; }
 
@@ -52,5 +51,12 @@ private:
     std::uint32_t m_vao = 0;
     std::uint32_t m_vbo = 0;
     std::uint32_t m_ebo = 0;
+
+    mutable std::uint32_t m_triangleNormalsVao = 0;
+    mutable std::uint32_t m_triangleNormalsVbo = 0;
+    mutable int m_triangleNormalsCount = 0;
+    mutable std::uint32_t m_vertexNormalsVao = 0;
+    mutable std::uint32_t m_vertexNormalsVbo = 0;
+    mutable int m_vertexNormalsCount = 0;
 };
-} // namespace Engine
+}

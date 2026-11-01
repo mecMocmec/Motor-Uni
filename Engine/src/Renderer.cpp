@@ -40,7 +40,6 @@ void main()
 }
 )";
 
-// De moment es pinta la normal com a color; amb les textures s'hi afegirà el mostreig.
 constexpr const char* kFragmentShader = R"(#version 460 core
 in vec3 vNormal;
 in vec2 vTexCoord;
@@ -48,10 +47,17 @@ out vec4 color;
 
 uniform sampler2D ourTexture;
 uniform int use_texture;
+uniform int use_flat_color;
+uniform vec3 flat_color;
 
 void main()
 {
-    if (use_texture == 1)
+    if (use_flat_color == 1)
+    {
+        // Línies de normals: color pla.
+        color = vec4(flat_color, 1.0);
+    }
+    else if (use_texture == 1)
     {
         color = texture(ourTexture, vTexCoord);
     }
@@ -81,7 +87,7 @@ GLuint CompileShader(GLenum type, const char* source)
     }
     return shader;
 }
-} // namespace
+}
 
 bool Renderer::Init()
 {
@@ -114,6 +120,8 @@ bool Renderer::Init()
     m_locProjection = glGetUniformLocation(m_program, "projection");
     m_locSampler = glGetUniformLocation(m_program, "ourTexture");
     m_locUseTexture = glGetUniformLocation(m_program, "use_texture");
+    m_locUseFlatColor = glGetUniformLocation(m_program, "use_flat_color");
+    m_locFlatColor = glGetUniformLocation(m_program, "flat_color");
 
     m_checkers = Texture::CreateCheckers();
 
@@ -187,7 +195,6 @@ void Renderer::RenderScene(const Scene& scene, const Camera& camera)
     glClearColor(m_settings.clearColor.r, m_settings.clearColor.g, m_settings.clearColor.b, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-    // Opcions de la finestra Configuracio
     const auto setCapability = [](GLenum capability, bool enabled)
     {
         if (enabled)
@@ -214,11 +221,12 @@ void Renderer::RenderScene(const Scene& scene, const Camera& camera)
     glUseProgram(m_program);
     glUniformMatrix4fv(m_locView, 1, GL_FALSE, glm::value_ptr(view));
     glUniformMatrix4fv(m_locProjection, 1, GL_FALSE, glm::value_ptr(projection));
-    glUniform1i(m_locSampler, 0); // unitat de textura 0
+    glUniform1i(m_locSampler, 0);
+    glUniform1i(m_locUseFlatColor, 0);
 
     DrawGameObject(scene.GetRoot());
 
-    glPolygonMode(GL_FRONT_AND_BACK, GL_FILL); // el wireframe només afecta l'escena, no l'editor
+    glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
     glDisable(GL_BLEND);
 
     glUseProgram(0);
@@ -227,7 +235,6 @@ void Renderer::RenderScene(const Scene& scene, const Camera& camera)
 
 void Renderer::DrawGameObject(const GameObject& gameObject) const
 {
-    // Un GameObject desactivat amaga també tot el seu subarbre.
     if (!gameObject.IsActive())
     {
         return;
@@ -257,7 +264,23 @@ void Renderer::DrawGameObject(const GameObject& gameObject) const
 
         if (texture != nullptr)
         {
-            glBindTexture(GL_TEXTURE_2D, 0); // sempre deslliguem la textura després de fer-la servir
+            glBindTexture(GL_TEXTURE_2D, 0);
+        }
+
+        if (meshComponent->ShowTriangleNormals() || meshComponent->ShowVertexNormals())
+        {
+            glUniform1i(m_locUseFlatColor, 1);
+            if (meshComponent->ShowTriangleNormals())
+            {
+                glUniform3f(m_locFlatColor, 0.2f, 0.9f, 1.0f);
+                meshComponent->GetMesh()->DrawTriangleNormals();
+            }
+            if (meshComponent->ShowVertexNormals())
+            {
+                glUniform3f(m_locFlatColor, 1.0f, 0.85f, 0.2f);
+                meshComponent->GetMesh()->DrawVertexNormals();
+            }
+            glUniform1i(m_locUseFlatColor, 0);
         }
     }
 
@@ -266,4 +289,4 @@ void Renderer::DrawGameObject(const GameObject& gameObject) const
         DrawGameObject(*child);
     }
 }
-} // namespace Engine
+}
