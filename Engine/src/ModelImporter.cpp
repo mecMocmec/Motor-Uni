@@ -30,7 +30,6 @@ aiLogStream g_logStream{};
 bool g_logAttached = false;
 std::string g_resourcesRoot;
 
-// Dades compartides durant la importació d'un model.
 struct ImportContext
 {
     ImportContext(const aiScene& importedScene, fs::path directory)
@@ -44,12 +43,12 @@ struct ImportContext
 
     const aiScene& scene;
     fs::path modelDirectory;
-    std::vector<std::shared_ptr<Mesh>> meshes;       // una conversió per aiMesh
-    std::vector<std::shared_ptr<Texture>> textures;  // una càrrega per aiMaterial
+    std::vector<std::shared_ptr<Mesh>> meshes;
+    std::vector<std::shared_ptr<Texture>> textures;
     std::vector<bool> textureTried;
 };
 
-void AssimpLogCallback(const char* message, char* /*user*/)
+void AssimpLogCallback(const char* message, char* user)
 {
     std::string text(message);
     while (!text.empty() && (text.back() == '\n' || text.back() == '\r'))
@@ -130,7 +129,6 @@ fs::path SearchByName(const fs::path& root, const std::string& lowerFileName)
     return {};
 }
 
-// L'FBX pot guardar rutes d'un altre ordinador (amb \ o /): només ens fiem del nom del fitxer.
 fs::path FindTextureFile(const std::string& referenced, const fs::path& modelDirectory)
 {
     const std::size_t separator = referenced.find_last_of("/\\");
