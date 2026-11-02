@@ -13,7 +13,6 @@ namespace Engine
 {
 class ComponentTransform;
 
-// Un GameObject conté 1 Transform (sempre) + 0..N components i una llista de fills.
 class GameObject
 {
 public:
@@ -46,7 +45,6 @@ public:
         return reference;
     }
 
-    // Retorna el primer component d'aquest tipus, o nullptr si no n'hi ha.
     template <class T>
     T* GetComponent() const
     {
@@ -60,10 +58,8 @@ public:
         return nullptr;
     }
 
-    // AABB en espai món de tot el subarbre (cal haver actualitzat les matrius). Retorna false si no hi ha malles.
     bool ComputeWorldAabb(glm::vec3& outMin, glm::vec3& outMax) const;
 
-    // Recalcula les matrius globals de tot el subarbre.
     void UpdateTransforms(const glm::mat4& parentGlobal);
 
 private:
@@ -74,4 +70,4 @@ private:
     std::vector<std::unique_ptr<Component>> m_components;
     ComponentTransform* m_transform = nullptr;
 };
-} // namespace Engine
+} 

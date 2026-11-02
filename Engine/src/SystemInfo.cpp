@@ -93,7 +93,7 @@ std::string ReadCpuFeatures()
     add(SDL_HasAVX2(), "AVX2");
     return features.empty() ? "none detected" : features;
 }
-} // namespace
+}
 
 SystemInfo QuerySystemInfo(SDL_Window* window)
 {
@@ -148,7 +148,7 @@ SystemInfo QuerySystemInfo(SDL_Window* window)
     const int sdl = SDL_GetVersion();
     info.sdlVersion = std::format("{}.{}.{}", SDL_VERSIONNUM_MAJOR(sdl), SDL_VERSIONNUM_MINOR(sdl), SDL_VERSIONNUM_MICRO(sdl));
 
-    const int devil = ilGetInteger(IL_VERSION_NUM); // p. ex. 180 = 1.8.0
+    const int devil = ilGetInteger(IL_VERSION_NUM);
     info.devilVersion = std::format("{}.{}.{}", devil / 100, (devil / 10) % 10, devil % 10);
 
     info.assimpVersion = std::format("{}.{}.{}", aiGetVersionMajor(), aiGetVersionMinor(), aiGetVersionPatch());
@@ -181,7 +181,6 @@ MemoryInfo QueryMemoryInfo()
     info.systemTotalBytes = static_cast<std::uint64_t>(SDL_GetSystemRAM()) * 1024ull * 1024ull;
 #endif
 
-    // Memòria de la GPU: només amb les extensions de NVIDIA o AMD. Es comprova un cop.
     static const bool hasNvx = HasGlExtension("GL_NVX_gpu_memory_info");
     static const bool hasAti = !hasNvx && HasGlExtension("GL_ATI_meminfo");
     while (glGetError() != GL_NO_ERROR)
@@ -206,4 +205,4 @@ MemoryInfo QueryMemoryInfo()
     }
     return info;
 }
-} // namespace Engine
+} 

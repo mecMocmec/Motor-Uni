@@ -30,12 +30,12 @@ float KbToMb(std::uint64_t kilobytes)
 {
     return static_cast<float>(static_cast<double>(kilobytes) / 1024.0);
 }
-} // namespace
+}
 
 void ConfigurationPanel::Draw(Engine::Application& app, bool& open, bool cameraCapturing)
 {
     ImGui::SetNextWindowSize(ImVec2(460.0f, 680.0f), ImGuiCond_FirstUseEver);
-    if (ImGui::Begin("Configuracion", &open))
+    if (ImGui::Begin("Configuration", &open))
     {
         DrawFpsSection(app);
         DrawWindowSection(app);
@@ -219,7 +219,7 @@ void ConfigurationPanel::DrawCameraSection(Engine::Application& app)
     {
         camera.SetFovDegrees(fov);
     }
-    // El FOV vertical és el que fixem; l'horitzontal depèn de la relació d'aspecte de la vista.
+    
     const Engine::Renderer& renderer = app.GetRenderer();
     const float aspect = renderer.TargetHeight() > 0 ? static_cast<float>(renderer.TargetWidth()) / static_cast<float>(renderer.TargetHeight()) : 1.0f;
     const float horizontalFov = glm::degrees(2.0f * std::atan(std::tan(glm::radians(fov) * 0.5f) * aspect));
@@ -434,7 +434,6 @@ void ConfigurationPanel::DrawMemorySection(Engine::Application& app)
         ImGui::TextDisabled("GPU memory: not reported by this driver");
     }
 
-    // Historial del consum del procés, una mostra cada 0,25 s.
     m_memoryTimer += ImGui::GetIO().DeltaTime;
     if (m_memoryTimer >= 0.25f)
     {
@@ -495,4 +494,4 @@ void ConfigurationPanel::DrawSoftwareSection(Engine::Application& app)
     ImGui::Separator();
     ImGui::Text("Platform: %s   Video driver: %s", info.platform.c_str(), info.videoDriver.c_str());
 }
-} // namespace Editor
+}

@@ -10,7 +10,6 @@ add_executable(Editor
 )
 target_link_libraries(Editor PRIVATE Engine imgui::imgui)
 
-# Copia Assets junto al .exe en CADA compilación (un POST_BUILD només s'executa si es torna a enllaçar l'exe).
 add_custom_target(CopyAssets ALL
     COMMAND ${CMAKE_COMMAND} -E copy_directory
             ${CMAKE_SOURCE_DIR}/Assets $<TARGET_FILE_DIR:Editor>/Assets

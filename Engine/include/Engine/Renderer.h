@@ -13,19 +13,17 @@ class Camera;
 class GameObject;
 class Scene;
 
-// Opcions del renderer que es poden canviar des de la finestra Configuracio.
 struct RendererSettings
 {
-    bool depthTest = true;                  // GL_DEPTH_TEST
-    bool cullFace = true;                   // GL_CULL_FACE
-    bool cullBackFaces = true;              // true: GL_BACK, false: GL_FRONT
-    bool frontFaceCounterClockwise = true;  // glFrontFace(GL_CCW / GL_CW)
-    bool wireframe = false;                 // glPolygonMode(GL_LINE)
-    bool blend = false;                     // GL_BLEND amb alfa
+    bool depthTest = true;                 
+    bool cullFace = true;                   
+    bool cullBackFaces = true;              
+    bool frontFaceCounterClockwise = true; 
+    bool wireframe = false;                 
+    bool blend = false;                     
     glm::vec3 clearColor{0.12f, 0.12f, 0.14f};
 };
 
-// Renderitza l'escena a un framebuffer (textura) que l'editor mostra a la finestra Escena.
 class Renderer
 {
 public:
@@ -63,4 +61,4 @@ private:
     int m_width = 0;
     int m_height = 0;
 };
-} // namespace Engine
+} 

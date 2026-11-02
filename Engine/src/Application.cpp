@@ -25,7 +25,6 @@ std::string ToLower(std::string text)
     return text;
 }
 
-// Aplica la textura a tots els GameObjects amb malla del subarbre. Retorna quants n'ha modificat.
 int ApplyTexture(GameObject& gameObject, const std::shared_ptr<Texture>& texture)
 {
     int applied = 0;
@@ -48,7 +47,6 @@ int ApplyTexture(GameObject& gameObject, const std::shared_ptr<Texture>& texture
     return applied;
 }
 
-// Extensió en minúscules, amb el punt (".fbx"); buida si no en té.
 std::string LowerExtension(const std::string& path)
 {
     const std::size_t dot = path.find_last_of('.');
@@ -59,7 +57,7 @@ std::string LowerExtension(const std::string& path)
     }
     return ToLower(path.substr(dot));
 }
-} // namespace
+} 
 
 bool Application::Init(const char* title, int width, int height)
 {
@@ -138,7 +136,6 @@ void Application::Shutdown()
 {
     if (m_glContext != nullptr)
     {
-        // Les malles alliberen buffers d'OpenGL: cal destruir-les abans del context.
         m_scene.Clear();
         m_renderer.Shutdown();
         SDL_GL_DestroyContext(m_glContext);
@@ -209,12 +206,10 @@ bool Application::LoadModel(const std::string& utf8Path)
 
 void Application::LoadDefaultModel()
 {
-    // Busca (també dins de subcarpetes) a Assets/Resources, al costat de l'executable,
-    // un .fbx amb "baker" al nom.
     const char* basePath = SDL_GetBasePath();
     const std::filesystem::path resources = std::filesystem::path(basePath != nullptr ? basePath : "") / "Assets" / "Resources";
     ENGINE_LOGF("Looking for the default model in '{}'", ToUtf8(resources));
-    ModelImporter::SetResourcesRoot(ToUtf8(resources)); // també s'hi buscaran les textures
+    ModelImporter::SetResourcesRoot(ToUtf8(resources));
 
     std::error_code error;
     if (std::filesystem::is_directory(resources, error))
@@ -302,7 +297,6 @@ void Application::LimitFrameRate()
     {
         return;
     }
-    // m_lastTicksNs és l'inici d'aquest frame (es marca a Update).
     const std::uint64_t targetNs = 1'000'000'000ull / static_cast<std::uint64_t>(m_fpsLimit);
     const std::uint64_t elapsedNs = SDL_GetTicksNS() - m_lastTicksNs;
     if (elapsedNs < targetNs)
@@ -372,4 +366,4 @@ float Application::TimeSeconds() const
 {
     return static_cast<float>(SDL_GetTicks()) / 1000.0f;
 }
-} // namespace Engine
+}

@@ -14,14 +14,13 @@
 
 namespace Engine
 {
-// Historial dels darrers frames per al gràfic de FPS (buffer circular).
 struct FrameHistory
 {
     static constexpr int kSamples = 120;
     std::array<float, kSamples> fps{};
     std::array<float, kSamples> frameMs{};
-    int offset = 0;         // propera posició a escriure
-    float currentFps = 0.0f; // FPS suavitzats
+    int offset = 0;         
+    float currentFps = 0.0f; 
 };
 
 class Application
@@ -30,10 +29,8 @@ public:
     bool Init(const char* title, int width, int height);
     void Shutdown();
 
-    // Processa els events de SDL. 'onEvent' deixa que l'editor també els rebi (ImGui).
     void PumpEvents(const std::function<void(const SDL_Event&)>& onEvent);
 
-    // Importa un model (FBX) i l'afegeix a l'escena. La ruta és UTF-8.
     bool LoadModel(const std::string& utf8Path);
 
     void Update();
@@ -44,10 +41,9 @@ public:
     void RequestQuit() { m_running = false; }
 
     float TimeSeconds() const;
-    float DeltaTime() const { return m_deltaTime; } // segons del darrer frame
+    float DeltaTime() const { return m_deltaTime; } 
 
-    // --- Finestra ---
-    void GetWindowSize(int& width, int& height) const; // en píxels
+    void GetWindowSize(int& width, int& height) const; 
     void SetWindowSize(int width, int height);
     bool IsFullscreen() const;
     void SetFullscreen(bool fullscreen);
@@ -57,10 +53,9 @@ public:
     void SetBordered(bool bordered);
     bool IsVSync() const { return m_vsync; }
     void SetVSync(bool vsync);
-    int GetFpsLimit() const { return m_fpsLimit; } // 0 = sense límit
+    int GetFpsLimit() const { return m_fpsLimit; } 
     void SetFpsLimit(int fps) { m_fpsLimit = fps; }
 
-    // --- Informació ---
     const FrameHistory& GetFrameHistory() const { return m_frameHistory; }
     const SystemInfo& GetSystemInfo() const { return m_systemInfo; }
     MemoryInfo QueryMemory() const;
@@ -90,4 +85,4 @@ private:
     int m_fpsLimit = 0;
     bool m_running = false;
 };
-} // namespace Engine
+} 

@@ -35,4 +35,4 @@ void OnTextureDestroyed(std::uint64_t bytes)
     --g_stats.textureCount;
     g_stats.textureBytes -= bytes;
 }
-} // namespace Engine::ResourceStats
+}

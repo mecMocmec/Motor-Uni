@@ -8,10 +8,9 @@ enum class ComponentType
 {
     Transform,
     Mesh,
-    Texture // s'afegirà amb la càrrega de textures (DevIL)
+    Texture 
 };
 
-// Classe base de tots els components. Cada component pertany a un GameObject.
 class Component
 {
 public:
@@ -32,4 +31,4 @@ private:
     GameObject* m_owner;
     bool m_active = true;
 };
-} // namespace Engine
+} 

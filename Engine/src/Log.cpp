@@ -23,4 +23,4 @@ void Log::Write(std::string_view message)
         g_sink(message);
     }
 }
-} // namespace Engine
+}

@@ -14,7 +14,7 @@ namespace Engine
 class Application;
 class GameObject;
 class Scene;
-} // namespace Engine
+}
 
 namespace Editor
 {
@@ -59,4 +59,4 @@ private:
     bool m_showInspector = true;
     bool m_initialised = false;
 };
-} // namespace Editor
+}

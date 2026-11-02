@@ -16,7 +16,6 @@ struct SceneStats
     std::uint64_t triangles = 0;
 };
 
-// Conté només el node arrel; la resta de GameObjects pengen d'ell com un arbre.
 class Scene
 {
 public:
@@ -24,7 +23,6 @@ public:
 
     GameObject& GetRoot() const { return *m_root; }
 
-    // Si 'parent' és nullptr, el GameObject es crea sota l'arrel.
     GameObject& CreateGameObject(std::string name, GameObject* parent = nullptr);
     void Destroy(GameObject& gameObject);
     void Clear();
@@ -39,4 +37,4 @@ private:
     std::unique_ptr<GameObject> m_root;
     GameObject* m_selected = nullptr;
 };
-} // namespace Engine
+} 

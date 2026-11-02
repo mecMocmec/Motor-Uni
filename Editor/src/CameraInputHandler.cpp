@@ -15,7 +15,7 @@ bool IsShiftDown()
     const bool* keys = SDL_GetKeyboardState(nullptr);
     return keys[SDL_SCANCODE_LSHIFT] || keys[SDL_SCANCODE_RSHIFT];
 }
-} // namespace
+} 
 
 bool CameraInputHandler::ProcessEvent(const SDL_Event& event, SDL_Window* window, bool textInputActive)
 {
@@ -27,7 +27,7 @@ bool CameraInputHandler::ProcessEvent(const SDL_Event& event, SDL_Window* window
         switch (event.button.button)
         {
         case SDL_BUTTON_LEFT:
-            mask = IsAltDown() ? kLeft : 0; // el clic esquerre sol queda lliure (selecció)
+            mask = IsAltDown() ? kLeft : 0;
             break;
         case SDL_BUTTON_MIDDLE:
             mask = kMiddle;
@@ -38,15 +38,13 @@ bool CameraInputHandler::ProcessEvent(const SDL_Event& event, SDL_Window* window
         default:
             break;
         }
-
-        // Només s'inicia una captura si el clic és sobre l'Escena (o si ja n'hi havia una).
+                
         if (mask != 0 && (m_sceneHovered || IsCapturing()))
         {
             const bool wasCapturing = IsCapturing();
             m_captureMask |= mask;
             if (!wasCapturing)
-            {
-                // Ratolí relatiu: cursor amagat i moviment il·limitat, com a Unity.
+            {                
                 SDL_SetWindowRelativeMouseMode(window, true);
             }
         }
@@ -164,4 +162,4 @@ void CameraInputHandler::ReleaseCapture(SDL_Window* window)
         SDL_SetWindowRelativeMouseMode(window, false);
     }
 }
-} // namespace Editor
+} 
