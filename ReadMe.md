@@ -1,5 +1,8 @@
 This project is a simple game engine made in C++ for the Game Engines subject at CITM (UPC). https://github.com/mecMocmec/Motor-Uni
-Made by Elena Ibañez Armora, Marcel Pascual Martinez and Marc Port Prat.
+Made by: 
+Elena Ibañez Armora: https://github.com/mecMocmec
+Marcel Pascual Martinez: https://github.com/guifre1714
+Marc Port Prat: https://github.com/Marcoto06
 
 Hold Right Mouse button to move using WASD and Q and E to lower and raise the camera; while holding this button you can also use the mouse wheel to increase or decrease the camera speed. If you don't hold the right mouse button, the mouse wheel zooms in and out.
 In the hierarchy, you can access all GameObjects and focus on them by pressing the F key. When a GameObject is selected, you can see its components and values and modify them.
