@@ -31,7 +31,6 @@ glm::vec3 Camera::Forward() const
 
 glm::vec3 Camera::Right() const
 {
-    // Sempre horitzontal: al mirar amunt o avall la càmera no es "decanta".
     return glm::vec3(std::cos(m_yaw), 0.0f, std::sin(m_yaw));
 }
 
@@ -55,4 +54,4 @@ glm::mat4 Camera::ProjectionMatrix(float aspectRatio) const
 {
     return glm::perspective(glm::radians(m_fovDegrees), aspectRatio, m_near, m_far);
 }
-} // namespace Engine
+} 

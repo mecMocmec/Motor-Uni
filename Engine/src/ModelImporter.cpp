@@ -111,7 +111,6 @@ std::shared_ptr<Mesh> GetOrCreateMesh(ImportContext& context, unsigned int index
     return context.meshes[index];
 }
 
-// Busca el fitxer pel nom dins d'una carpeta i les seves subcarpetes (sense distingir majúscules).
 fs::path SearchByName(const fs::path& root, const std::string& lowerFileName)
 {
     std::error_code error;
@@ -216,7 +215,6 @@ void ImportNode(const aiNode& node, GameObject& parent, ImportContext& context)
 {
     GameObject& gameObject = parent.CreateChild(node.mName.length > 0 ? node.mName.C_Str() : "Node");
 
-    // Descomponem la matriu del node: posició, rotació (quaternió) i escala per separat.
     aiVector3D scaling;
     aiQuaternion rotation;
     aiVector3D position;
@@ -242,7 +240,6 @@ void ImportNode(const aiNode& node, GameObject& parent, ImportContext& context)
     }
     else
     {
-        // Diverses malles al mateix node: un GameObject fill per cadascuna.
         for (const unsigned int index : meshIndices)
         {
             const aiMesh& source = *context.scene.mMeshes[index];
@@ -256,7 +253,7 @@ void ImportNode(const aiNode& node, GameObject& parent, ImportContext& context)
         ImportNode(*node.mChildren[i], gameObject, context);
     }
 }
-} // namespace
+}
 
 void Init()
 {
@@ -264,7 +261,6 @@ void Init()
     {
         return;
     }
-    // Els missatges d'Assimp van a la nostra consola.
     g_logStream.callback = AssimpLogCallback;
     g_logStream.user = nullptr;
     aiAttachLogStream(&g_logStream);
@@ -316,4 +312,4 @@ GameObject* Load(Scene& scene, const std::string& utf8Path, GameObject* parent)
     ENGINE_LOGF("Model '{}' loaded in {} ms", root.GetName(), elapsed.count());
     return &root;
 }
-} // namespace Engine::ModelImporter
+}

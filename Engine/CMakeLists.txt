@@ -27,7 +27,7 @@ target_link_libraries(Engine
 )
 target_include_directories(Engine PRIVATE ${IL_INCLUDE_DIR})
 
-# Memòria del procés (psapi) i nom de la CPU (registre) a Windows
+
 if(WIN32)
     target_link_libraries(Engine PRIVATE psapi advapi32)
 endif()

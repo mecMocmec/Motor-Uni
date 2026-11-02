@@ -78,4 +78,4 @@ void AboutWindow::Draw(const Engine::SystemInfo& info, bool& open) const
     }
     ImGui::End();
 }
-} // namespace Editor
+} 

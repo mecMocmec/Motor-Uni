@@ -31,7 +31,6 @@ enum class TextureMagFilter
     Linear
 };
 
-// Opcions globals de mostreig. S'apliquen a totes les textures vives (menys la de quadrats).
 struct TextureSettings
 {
     TextureWrap wrap = TextureWrap::Repeat;
@@ -40,22 +39,17 @@ struct TextureSettings
     float anisotropy = 1.0f;
 };
 
-// Textura 2D a la VRAM. DevIL només es fa servir dins de Texture.cpp.
-// Ha de destruir-se mentre el context d'OpenGL encara existeix.
 class Texture
 {
 public:
-    // Inicialitza/tanca DevIL (cal cridar-ho un cop, després de crear el context).
     static void InitLoader();
     static void ShutdownLoader();
 
-    // Carrega PNG/DDS/... des d'una ruta UTF-8. Retorna nullptr si falla.
     static std::shared_ptr<Texture> LoadFromFile(const std::string& utf8Path);
-    // Textura procedural de quadrats blancs i negres.
     static std::shared_ptr<Texture> CreateCheckers();
 
     static TextureSettings& GetSettings();
-    static void ApplySettings(); // torna a aplicar GetSettings() a totes les textures
+    static void ApplySettings(); 
     static float MaxAnisotropy();
     static const std::vector<const Texture*>& GetAll();
 
@@ -81,4 +75,4 @@ private:
     bool m_pixelated = false;
     std::uint64_t m_gpuBytes = 0;
 };
-} // namespace Engine
+} 

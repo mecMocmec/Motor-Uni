@@ -30,7 +30,7 @@ void CreatePrimitive(Engine::Scene& scene, const char* name, std::shared_ptr<Eng
     gameObject.AddComponent<Engine::ComponentMesh>(std::move(mesh));
     scene.Select(&gameObject);
 }
-} // namespace
+}
 
 EditorUI::EditorUI()
 {
@@ -213,25 +213,25 @@ void EditorUI::DrawMainMenu(Engine::Application& app)
     }
     if (ImGui::BeginMenu("View"))
     {
-        ImGui::MenuItem("Escena", nullptr, &m_showScene);
-        ImGui::MenuItem("Jerarquia", nullptr, &m_showHierarchy);
+        ImGui::MenuItem("Scene", nullptr, &m_showScene);
+        ImGui::MenuItem("Hierarchy", nullptr, &m_showHierarchy);
         ImGui::MenuItem("Inspector", nullptr, &m_showInspector);
-        ImGui::MenuItem("Consola", nullptr, &m_showConsole);
-        ImGui::MenuItem("Configuracion", nullptr, &m_showConfiguration);
+        ImGui::MenuItem("Console", nullptr, &m_showConsole);
+        ImGui::MenuItem("Configuration", nullptr, &m_showConfiguration);
         ImGui::MenuItem("About", nullptr, &m_showAbout);
         ImGui::EndMenu();
     }
     if (ImGui::BeginMenu("Help"))
     {
-        if (ImGui::MenuItem("Documentacion del GitHub"))
+        if (ImGui::MenuItem("GitHub documentation"))
         {
             ProjectInfo::OpenRepositoryPage("/docs");
         }
-        if (ImGui::MenuItem("Reportar un bug"))
+        if (ImGui::MenuItem("Report a bug"))
         {
             ProjectInfo::OpenRepositoryPage("/issues");
         }
-        if (ImGui::MenuItem("Descargar ultimo"))
+        if (ImGui::MenuItem("Download latest"))
         {
             ProjectInfo::OpenRepositoryPage("/releases");
         }
@@ -248,7 +248,7 @@ void EditorUI::DrawScenePanel(Engine::Application& app)
     float viewportHeight = 1.0f;
 
     ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0.0f, 0.0f));
-    if (ImGui::Begin("Escena", &m_showScene))
+    if (ImGui::Begin("Scene", &m_showScene))
     {
         const ImVec2 size = ImGui::GetContentRegionAvail();
         if (size.x > 1.0f && size.y > 1.0f)
@@ -281,7 +281,7 @@ void EditorUI::DrawScenePanel(Engine::Application& app)
 
 void EditorUI::DrawConsolePanel()
 {
-    if (ImGui::Begin("Consola", &m_showConsole))
+    if (ImGui::Begin("Console", &m_showConsole))
     {
         if (ImGui::Button("Clear"))
         {
@@ -307,7 +307,7 @@ void EditorUI::DrawConsolePanel()
 
 void EditorUI::DrawHierarchyPanel(Engine::Scene& scene)
 {
-    if (ImGui::Begin("Jerarquia", &m_showHierarchy))
+    if (ImGui::Begin("Hierarchy", &m_showHierarchy))
     {
         Engine::GameObject* toDelete = nullptr;
         Engine::GameObject* addChildTo = nullptr;

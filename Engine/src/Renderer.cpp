@@ -54,7 +54,6 @@ void main()
 {
     if (use_flat_color == 1)
     {
-        // Línies de normals: color pla.
         color = vec4(flat_color, 1.0);
     }
     else if (use_texture == 1)
@@ -63,7 +62,6 @@ void main()
     }
     else
     {
-        // Sense textura: es pinta la normal com a color.
         color = vec4(normalize(vNormal) * 0.5 + 0.5, 1.0);
     }
 }

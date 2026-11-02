@@ -27,4 +27,4 @@ void ComponentTransform::UpdateGlobal(const glm::mat4& parentGlobal)
 {
     m_global = parentGlobal * GetLocalMatrix();
 }
-} // namespace Engine
+}

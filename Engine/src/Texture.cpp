@@ -129,12 +129,11 @@ std::uint32_t UploadRgba(const unsigned char* pixels, int width, int height, boo
     glBindTexture(GL_TEXTURE_2D, 0);
     return id;
 }
-} // namespace
+} 
 
 void Texture::InitLoader()
 {
     ilInit();
-    // Origen a baix a l'esquerra, com OpenGL i les UV que dona Assimp: així no cal girar res.
     ilEnable(IL_ORIGIN_SET);
     ilOriginFunc(IL_ORIGIN_LOWER_LEFT);
     ENGINE_LOGF("DevIL initialised (version {})", ilGetInteger(IL_VERSION_NUM));
@@ -188,7 +187,7 @@ void Texture::ApplyParameters() const
 {
     if (m_pixelated)
     {
-        return; // la textura de quadrats sempre es veu a píxels
+        return;
     }
 
     const TextureSettings& settings = GetSettings();
@@ -209,7 +208,6 @@ std::shared_ptr<Texture> Texture::LoadFromFile(const std::string& utf8Path)
 {
     const auto start = std::chrono::steady_clock::now();
 
-    // Llegim el fitxer nosaltres i li donem els bytes a DevIL: així les rutes UTF-8 funcionen.
     std::ifstream file(FromUtf8(utf8Path), std::ios::binary);
     if (!file)
     {
@@ -243,12 +241,12 @@ std::shared_ptr<Texture> Texture::LoadFromFile(const std::string& utf8Path)
     texture->m_width = width;
     texture->m_height = height;
     texture->m_path = utf8Path;
-    texture->m_gpuBytes = static_cast<std::uint64_t>(width) * static_cast<std::uint64_t>(height) * 4ull * 4ull / 3ull; // RGBA8 + mipmaps
+    texture->m_gpuBytes = static_cast<std::uint64_t>(width) * static_cast<std::uint64_t>(height) * 4ull * 4ull / 3ull;
     texture->m_id = UploadRgba(ilGetData(), width, height, false);
     ilDeleteImages(1, &image);
 
     texture->Register();
-    texture->ApplyParameters(); // fa servir les opcions globals actuals
+    texture->ApplyParameters();
 
     const auto elapsed = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::steady_clock::now() - start);
     ENGINE_LOGF("Texture '{}' loaded ({}x{}) in {} ms", utf8Path, width, height, elapsed.count());
@@ -289,4 +287,4 @@ Texture::~Texture()
     ResourceStats::OnTextureDestroyed(m_gpuBytes);
     glDeleteTextures(1, &m_id);
 }
-} // namespace Engine
+}

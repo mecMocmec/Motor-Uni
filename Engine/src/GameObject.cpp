@@ -33,7 +33,7 @@ void AccumulateAabb(const GameObject& gameObject, glm::vec3& outMin, glm::vec3& 
         AccumulateAabb(*child, outMin, outMax, found);
     }
 }
-} // namespace
+} 
 
 GameObject::GameObject(std::string name, GameObject* parent) : m_name(std::move(name)), m_parent(parent)
 {
@@ -82,4 +82,4 @@ void GameObject::UpdateTransforms(const glm::mat4& parentGlobal)
         child->UpdateTransforms(m_transform->GetGlobalMatrix());
     }
 }
-} // namespace Engine
+} 

@@ -4,7 +4,7 @@
 
 int main()
 {
-    Editor::EditorUI ui; // instal·la el sink de logs abans d'inicialitzar el motor
+    Editor::EditorUI ui;
     Engine::Application app;
 
     if (!app.Init("Motor", 1280, 720))

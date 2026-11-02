@@ -2,14 +2,12 @@
 
 #include <array>
 
-namespace Engine
-{
-class Application;
+namespace Engine {
+    class Application;
 }
 
 namespace Editor
 {
-// Finestra Configuracio: FPS, variables de cada modul, memoria, hardware i versions.
 class ConfigurationPanel
 {
 public:
@@ -34,4 +32,4 @@ private:
 
     int m_pendingWindowSize[2] = {0, 0};
 };
-} // namespace Editor
+}

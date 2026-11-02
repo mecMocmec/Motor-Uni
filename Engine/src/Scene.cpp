@@ -24,7 +24,7 @@ void Accumulate(const GameObject& gameObject, SceneStats& stats)
         Accumulate(*child, stats);
     }
 }
-} // namespace
+} 
 
 Scene::Scene() : m_root(std::make_unique<GameObject>("Root")) {}
 
@@ -70,4 +70,4 @@ void Scene::Update()
 {
     m_root->UpdateTransforms(glm::mat4(1.0f));
 }
-} // namespace Engine
+}
