@@ -13,4 +13,7 @@ To load an fbx file or textures, you can drag & drop them into the scene.
 
 There are no extra functionalities.
 
+Additional comments and instructions:
+
+The different windows initially appear small and you may need to rescale them yourself.
 We initially installed Cmake manually but we had several errors (different in each device) which didn't allow us to work propperly. After a few days trying to solve them, we ended up starting from scratch and using Claude AI to install CMake and configure the overall project. Later on, during the ongoing development project, this same program was used when we faced bugs, errors, or things that didn't work as intended and we didn't know why.

@@ -25,7 +25,7 @@ struct CameraInput
     bool moveDown = false; 
     bool fast = false;     
 };
-.
+
 struct CameraSettings
 {
     float lookSensitivity = 0.0035f; 
